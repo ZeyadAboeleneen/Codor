@@ -49,7 +49,7 @@ export function ProductCard({
           >
             <Image
               src={product.image_url || "/placeholder.svg"}
-              alt={product.name_ar || product.name_en}
+              alt={product.name_en}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105 p-6"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -69,7 +69,7 @@ export function ProductCard({
           {product.brand && (
             <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
               <span className="px-2.5 py-1 bg-dark-900/80 backdrop-blur-sm border border-white/10 text-gold-400 text-xs font-bold rounded-md">
-                {product.brand.name_ar || product.brand.name_en}
+                {product.brand.name_en}
               </span>
             </div>
           )}
@@ -80,7 +80,7 @@ export function ProductCard({
           <div>
             {/* Name */}
             <h3 className="text-base sm:text-lg font-bold text-white mb-2 group-hover:text-gold-400 transition-colors">
-              {product.name_ar}
+              {product.name_en}
             </h3>
 
             {/* Description */}
@@ -96,7 +96,7 @@ export function ProductCard({
             href={`/product/${product.slug}`}
             className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-gold-500/10 text-gold-400 border border-gold-500/20 hover:bg-gold-500 hover:text-dark-900 hover:border-gold-500 transition-all duration-300 mt-2 text-sm font-medium"
           >
-            <span>استكشف الموديلات</span>
+            <span>{t("exploreModels")}</span>
             <ArrowLeft className="w-4 h-4" />
           </Link>
         </div>

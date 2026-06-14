@@ -6,8 +6,11 @@ import Image from "next/image"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
+import { useTranslations, useLocale } from "next-intl"
 
 export function HeroSlider() {
+  const t = useTranslations()
+  const locale = useLocale()
   const [currentSlide, setCurrentSlide] = useState(0)
   const [slides, setSlides] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -55,7 +58,9 @@ export function HeroSlider() {
     {
       id: "default",
       title_ar: "مرحباً بك في كوندور مصر",
+      title_en: "Welcome to Condor Egypt",
       subtitle_ar: "أفضل حلول مضخات المياه",
+      subtitle_en: "Best Water Pump Solutions",
       image_url: "/placeholder.svg?height=800&width=1600",
     }
   ]
@@ -104,17 +109,17 @@ export function HeroSlider() {
                   className="max-w-2xl"
                 >
                   <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 leading-tight">
-                    {slide.title_ar}
+                    {locale === "en" ? (slide.title_en || slide.title_ar) : slide.title_ar}
                   </h1>
-                  {slide.subtitle_ar && (
+                  {(slide.subtitle_ar || slide.subtitle_en) && (
                     <p className="text-lg sm:text-xl text-gray-300 mb-8 max-w-lg leading-relaxed">
-                      {slide.subtitle_ar}
+                      {locale === "en" ? (slide.subtitle_en || slide.subtitle_ar) : slide.subtitle_ar}
                     </p>
                   )}
-                  
+
                   {linkDestination && (
                     <Button asChild size="lg" className="bg-gold-500 text-dark-900 hover:bg-gold-400 text-lg px-8 h-12">
-                      <Link href={linkDestination}>استكشف الآن</Link>
+                      <Link href={linkDestination}>{t("exploreNow")}</Link>
                     </Button>
                   )}
                 </motion.div>

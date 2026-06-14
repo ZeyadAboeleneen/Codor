@@ -5,8 +5,10 @@ import Image from "next/image"
 import { Link } from "@/i18n/routing"
 import { ArrowLeft, ChevronRight, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useTranslations } from "next-intl"
 
 export function BrandsCarousel() {
+  const t = useTranslations()
   const [brands, setBrands] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -54,10 +56,10 @@ export function BrandsCarousel() {
           <div>
             <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
               <span className="w-8 h-1 bg-gold-500 rounded-full inline-block" />
-              علاماتنا التجارية
+              {t("ourBrands")}
             </h2>
             <p className="text-gray-400 text-base pr-11 max-w-xl">
-              تصفح منتجاتنا عبر أفضل العلامات التجارية العالمية في مجال مضخات المياه
+              {t("brandsCarouselDesc")}
             </p>
           </div>
           
@@ -82,7 +84,7 @@ export function BrandsCarousel() {
             </div>
             
             <Link href="/products" className="group flex items-center gap-2 text-sm text-gold-400 hover:text-gold-300 font-medium transition-colors bg-gold-500/10 px-4 py-2 rounded-full border border-gold-500/20 hover:bg-gold-500/20">
-              كل المنتجات
+              {t("allProducts")}
               <ArrowLeft className="h-4 w-4 transform group-hover:-translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -110,7 +112,7 @@ export function BrandsCarousel() {
                   {brand.logo_url ? (
                     <Image
                       src={brand.logo_url}
-                      alt={brand.name_ar}
+                      alt={brand.name_en}
                       fill
                       className="object-contain filter grayscale-[50%] brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-500 group-hover:scale-110 p-2"
                     />
@@ -122,11 +124,8 @@ export function BrandsCarousel() {
                 </div>
                 
                 <h3 className="text-lg font-bold text-white mb-1 group-hover:text-gold-400 transition-colors">
-                  {brand.name_ar}
-                </h3>
-                <p className="text-sm text-gray-500 font-medium">
                   {brand.name_en}
-                </p>
+                </h3>
                 
                 {/* Arrow Indicator */}
                 <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">

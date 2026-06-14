@@ -70,7 +70,7 @@ export function FeaturedProducts({
               href="/products"
               className="hidden md:flex items-center gap-2 text-gold-400 hover:text-gold-300 transition-colors text-sm font-medium group"
             >
-              عرض كل المنتجات
+              {t("viewAllProducts")}
               <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
             </Link>
           )}
@@ -92,7 +92,7 @@ export function FeaturedProducts({
           </div>
         ) : products.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-gray-400 text-lg">لا توجد منتجات متاحة حالياً.</p>
+            <p className="text-gray-400 text-lg">{t("noProductsAvailable")}</p>
           </div>
         ) : (
           <>
@@ -113,7 +113,7 @@ export function FeaturedProducts({
                   href="/products"
                   className="btn-gold-outline px-8 py-3 rounded-xl inline-flex items-center gap-2"
                 >
-                  عرض كل المنتجات
+                  {t("viewAllProducts")}
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
               </div>

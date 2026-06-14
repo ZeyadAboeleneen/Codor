@@ -268,17 +268,26 @@ export async function POST(request: NextRequest) {
         continue
       }
 
-      const { data: product } = await supabase
+      // Try by product_id (slug) first, then fall back to id (UUID)
+      let { data: product } = await supabase
         .from("products")
         .select("sizes")
         .eq("product_id", item.productId)
-        .single()
+        .maybeSingle()
 
       if (!product) {
-        return NextResponse.json(
-          { error: `Product ${item.productId} not found` },
-          { status: 404 }
-        )
+        const result = await supabase
+          .from("products")
+          .select("sizes")
+          .eq("id", item.productId)
+          .maybeSingle()
+        product = result.data
+      }
+
+      // If product still not found, skip stock check rather than block the order
+      if (!product) {
+        console.warn(`⚠️ [API] Product ${item.productId} not found for stock check — skipping`)
+        continue
       }
 
       // Find the size in the product
@@ -287,8 +296,8 @@ export async function POST(request: NextRequest) {
         // Check if requested quantity exceeds available stock
         if (item.quantity > sizeObj.stockCount) {
           return NextResponse.json(
-            { 
-              error: `Insufficient stock for ${item.name} - Size ${item.size}. Available: ${sizeObj.stockCount}, Requested: ${item.quantity}` 
+            {
+              error: `Insufficient stock for ${item.name} - Size ${item.size}. Available: ${sizeObj.stockCount}, Requested: ${item.quantity}`
             },
             { status: 400 }
           )
@@ -303,6 +312,7 @@ export async function POST(request: NextRequest) {
     // Prepare order document for Supabase
     const newOrder = {
       order_id: orderId,
+      order_number: orderId,
       user_id: userId === "guest" ? GUEST_USER_ID : userId,
       items: orderData.items.map((item: any) => ({
         id: item.id,
@@ -395,38 +405,46 @@ export async function POST(request: NextRequest) {
         continue
       }
 
-      const { data: product } = await supabase
+      const productClient = supabaseAdmin || supabase
+
+      // Try by product_id (slug) first, then fall back to id (UUID)
+      let { data: product } = await productClient
         .from("products")
-        .select("sizes, is_out_of_stock")
+        .select("id, sizes, is_out_of_stock")
         .eq("product_id", item.productId)
-        .single()
+        .maybeSingle()
+
+      if (!product) {
+        const result = await productClient
+          .from("products")
+          .select("id, sizes, is_out_of_stock")
+          .eq("id", item.productId)
+          .maybeSingle()
+        product = result.data
+      }
 
       if (product && product.sizes) {
         const sizeIndex = product.sizes.findIndex((s: any) => s.size === item.size)
         if (sizeIndex !== -1 && product.sizes[sizeIndex].stockCount !== undefined) {
           const newStockCount = product.sizes[sizeIndex].stockCount - item.quantity
-          
-          // Update the stock count for this size
+
           const updatedSizes = [...product.sizes]
           updatedSizes[sizeIndex] = {
             ...updatedSizes[sizeIndex],
             stockCount: Math.max(0, newStockCount)
           }
 
-          // Check if all sizes are out of stock and update product isOutOfStock flag
-          const allSizesOutOfStock = updatedSizes.every((s: any) => 
+          const allSizesOutOfStock = updatedSizes.every((s: any) =>
             s.stockCount === undefined || s.stockCount <= 0
           )
-          
-          // Use admin client for stock updates
-          const productClient = supabaseAdmin || supabase
+
           await productClient
             .from("products")
-            .update({ 
+            .update({
               sizes: updatedSizes,
               is_out_of_stock: allSizesOutOfStock
             })
-            .eq("product_id", item.productId)
+            .eq("id", product.id)
         }
       }
     }

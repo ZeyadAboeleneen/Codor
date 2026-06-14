@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useRef } from "react"
+import { useTranslations } from "next-intl"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -34,6 +35,7 @@ const emptyForm = {
 }
 
 export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
+  const t = useTranslations()
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<Brand | null>(null)
   const [form, setForm] = useState(emptyForm)
@@ -62,15 +64,13 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-    
     try {
       setIsUploading(true)
       const publicUrl = await uploadImageFile(file, "brands")
       setForm(prev => ({ ...prev, logo_url: publicUrl }))
-      toast.success("تم رفع الشعار بنجاح")
+      toast.success(t("logoUploadSuccess"))
     } catch (error: any) {
-      toast.error(error.message || "فشل رفع الشعار")
-      console.error(error)
+      toast.error(error.message || t("logoUploadError"))
     } finally {
       setIsUploading(false)
       if (fileInputRef.current) fileInputRef.current.value = ""
@@ -79,18 +79,16 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!form.name_en || !form.name_ar) { toast.error("اسم الماركة بالعربي والإنجليزي مطلوب"); return }
+    if (!form.name_en || !form.name_ar) { toast.error(t("brandNameRequired")); return }
 
     const token = getAuthToken()
     const slug = form.slug || form.name_en.toLowerCase().replace(/\s+/g, "-")
-    // Build payload with only fields that exist in DB
     const payload: Record<string, any> = {
       name_en: form.name_en,
       name_ar: form.name_ar,
       slug,
       logo_url: form.logo_url || null,
     }
-    // These fields may not exist yet in DB - add them conditionally
     if (form.description_en) payload.description_en = form.description_en
     if (form.description_ar) payload.description_ar = form.description_ar
 
@@ -103,8 +101,8 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
         })
         if (res.ok) {
           setBrands(brands.map(b => b.id === editing.id ? { ...b, ...payload } : b))
-          toast.success("تم تحديث الماركة")
-        } else { toast.error("فشل التحديث") }
+          toast.success(t("brandUpdated"))
+        } else { toast.error(t("updateFailed")) }
       } else {
         const res = await fetch("/api/admin/brands", {
           method: "POST",
@@ -114,15 +112,15 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
         if (res.ok) {
           const data = await res.json()
           setBrands([...brands, data.item])
-          toast.success("تم إضافة الماركة")
-        } else { toast.error("فشل الإضافة") }
+          toast.success(t("brandAdded"))
+        } else { toast.error(t("addFailed")) }
       }
       resetForm()
-    } catch { toast.error("حدث خطأ") }
+    } catch { toast.error(t("errorOccurred")) }
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm("هل أنت متأكد من حذف هذه الماركة؟")) return
+    if (!confirm(t("confirmDeleteBrand"))) return
     try {
       const token = getAuthToken()
       const res = await fetch(`/api/admin/brands?id=${id}`, {
@@ -131,9 +129,9 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
       })
       if (res.ok) {
         setBrands(brands.filter(b => b.id !== id))
-        toast.success("تم حذف الماركة")
+        toast.success(t("brandDeleted"))
       }
-    } catch { toast.error("فشل الحذف") }
+    } catch { toast.error(t("deleteFailed")) }
   }
 
   const toggleActive = async (brand: Brand) => {
@@ -148,10 +146,9 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
       if (res.ok) {
         setBrands(brands.map(b => b.id === brand.id ? { ...b, is_active: newActive } : b))
       } else {
-        // is_active column might not exist yet
-        toast.error("عمود is_active غير موجود - شغل الـ SQL migration")
+        toast.error(t("updateFailed"))
       }
-    } catch { toast.error("فشل التحديث") }
+    } catch { toast.error(t("updateFailed")) }
   }
 
   return (
@@ -159,10 +156,10 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-white flex items-center gap-2">
           <Building2 className="h-5 w-5 text-gold-400" />
-          الماركات ({brands.length})
+          {t("brandsTitle")} ({brands.length})
         </h2>
         <Button onClick={() => { resetForm(); setShowForm(true) }} className="bg-gold-500 text-dark-900 hover:bg-gold-400" size="sm">
-          <Plus className="h-4 w-4 ml-2" /> إضافة ماركة
+          <Plus className="h-4 w-4 ml-2" /> {t("addNewBrand")}
         </Button>
       </div>
 
@@ -170,7 +167,7 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
         <Card className="bg-dark-400 border-white/10">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-lg text-white">{editing ? "تعديل الماركة" : "إضافة ماركة جديدة"}</CardTitle>
+              <CardTitle className="text-lg text-white">{editing ? t("editBrand") : t("addNewBrand")}</CardTitle>
               <Button variant="ghost" size="sm" onClick={resetForm}><X className="h-4 w-4" /></Button>
             </div>
           </CardHeader>
@@ -178,41 +175,35 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-gray-300 text-sm">اسم الماركة (إنجليزي) *</Label>
+                  <Label className="text-gray-300 text-sm">{t("brandNameEn")}</Label>
                   <Input value={form.name_en} onChange={e => setForm({...form, name_en: e.target.value})} placeholder="Leo" className="mt-1 bg-dark-500 border-white/10 text-white" required />
                 </div>
                 <div>
-                  <Label className="text-gray-300 text-sm">اسم الماركة (عربي) *</Label>
-                  <Input value={form.name_ar} onChange={e => setForm({...form, name_ar: e.target.value})} placeholder="ليو" className="mt-1 bg-dark-500 border-white/10 text-white" required />
+                  <Label className="text-gray-300 text-sm">{t("brandNameAr")}</Label>
+                  <Input value={form.name_ar} onChange={e => setForm({...form, name_ar: e.target.value})} placeholder="Leo" className="mt-1 bg-dark-500 border-white/10 text-white" required />
                 </div>
               </div>
-              
+
               <div>
-                <Label className="text-gray-300 text-sm">شعار الماركة (Logo)</Label>
+                <Label className="text-gray-300 text-sm">{t("brandLogo")}</Label>
                 <div className="mt-2 flex flex-col gap-4 p-4 border border-dashed border-white/20 rounded-xl bg-dark-500/50">
                   <div className="flex items-center gap-4">
-                    <Button 
-                      type="button" 
-                      onClick={() => fileInputRef.current?.click()} 
+                    <Button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
                       disabled={isUploading}
                       className="bg-dark-300 text-white hover:bg-dark-200 border border-white/10"
                     >
                       {isUploading ? <Loader2 className="h-4 w-4 ml-2 animate-spin" /> : <UploadCloud className="h-4 w-4 ml-2" />}
-                      رفع من الجهاز
+                      {t("uploadFromDevice")}
                     </Button>
-                    <input 
-                      type="file" 
-                      ref={fileInputRef} 
-                      onChange={handleFileUpload} 
-                      accept="image/*" 
-                      className="hidden" 
-                    />
-                    <span className="text-gray-500 text-sm">أو رابط</span>
-                    <Input 
-                      value={form.logo_url} 
-                      onChange={e => setForm({...form, logo_url: e.target.value})} 
-                      placeholder="https://..." 
-                      className="bg-dark-500 border-white/10 text-white flex-1" 
+                    <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" className="hidden" />
+                    <span className="text-gray-500 text-sm">{t("orUrl")}</span>
+                    <Input
+                      value={form.logo_url}
+                      onChange={e => setForm({...form, logo_url: e.target.value})}
+                      placeholder="https://..."
+                      className="bg-dark-500 border-white/10 text-white flex-1"
                     />
                   </div>
                   {form.logo_url && (
@@ -225,17 +216,17 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-gray-300 text-sm">Slug (رابط مخصص)</Label>
+                  <Label className="text-gray-300 text-sm">Slug</Label>
                   <Input value={form.slug} onChange={e => setForm({...form, slug: e.target.value})} placeholder="leo" className="mt-1 bg-dark-500 border-white/10 text-white" />
                 </div>
                 <div>
-                  <Label className="text-gray-300 text-sm">وصف (عربي)</Label>
+                  <Label className="text-gray-300 text-sm">{t("descriptionAr")}</Label>
                   <Input value={form.description_ar} onChange={e => setForm({...form, description_ar: e.target.value})} className="mt-1 bg-dark-500 border-white/10 text-white" />
                 </div>
               </div>
 
               <Button type="submit" className="w-full bg-gold-500 text-dark-900 hover:bg-gold-400 font-semibold h-12" disabled={isUploading}>
-                <Save className="h-5 w-5 ml-2" /> {editing ? "تحديث" : "إضافة"}
+                <Save className="h-5 w-5 ml-2" /> {editing ? t("saveChanges") : t("addLabel")}
               </Button>
             </form>
           </CardContent>
@@ -246,7 +237,7 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
         <Card className="bg-dark-400 border-white/10">
           <CardContent className="py-12 text-center">
             <Building2 className="h-12 w-12 mx-auto text-gray-500 mb-4" />
-            <p className="text-gray-400">لا توجد ماركات. ابدأ بإضافة ماركة جديدة.</p>
+            <p className="text-gray-400">{t("noBrandsYet")}</p>
           </CardContent>
         </Card>
       ) : (
@@ -266,7 +257,7 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
                       </div>
                     )}
                     <div>
-                      <p className="font-semibold text-white">{brand.name_ar} <span className="text-gray-400 text-sm">({brand.name_en})</span></p>
+                      <p className="font-semibold text-white">{brand.name_en}</p>
                       <p className="text-xs text-gray-500">slug: {brand.slug}</p>
                     </div>
                   </div>
@@ -275,7 +266,7 @@ export function BrandsTab({ brands, setBrands, getAuthToken }: BrandsTabProps) {
                       className={`cursor-pointer text-xs ${brand.is_active !== false ? "bg-green-500/20 text-green-400 border-green-500/30" : "bg-gray-500/20 text-gray-400 border-gray-500/30"}`}
                       onClick={() => toggleActive(brand)}
                     >
-                      {brand.is_active !== false ? "مفعّل" : "معطّل"}
+                      {brand.is_active !== false ? t("activeStatus") : t("inactiveStatus")}
                     </Badge>
                     <Button variant="ghost" size="sm" onClick={() => startEdit(brand)} className="text-blue-400 hover:text-blue-300 h-8 w-8 p-0">
                       <Edit className="h-4 w-4" />

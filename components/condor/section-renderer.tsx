@@ -52,14 +52,11 @@ function RenderSection({ section, data }: { section: SectionConfig; data: Homepa
 
   switch (section.type) {
     case "hero":
-      return <HeroSlider slides={data.heroSlides} />
+      return <HeroSlider />
 
     case "brands":
       return (
-        <BrandsCarousel
-          brands={data.brands}
-          title={getTitle()}
-        />
+        <BrandsCarousel />
       )
 
     case "categories":

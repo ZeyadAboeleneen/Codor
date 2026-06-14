@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useRef } from "react"
+import { useTranslations } from "next-intl"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -39,6 +40,7 @@ interface ProductsTabProps {
 const emptyForm = { name_en: "", name_ar: "", slug: "", brand_id: "", image_url: "", description_en: "", description_ar: "" }
 
 export function ProductsTab({ products, setProducts, brands, getAuthToken }: ProductsTabProps) {
+  const t = useTranslations()
   const [showForm, setShowForm] = useState(false)
   const [editing, setEditing] = useState<Product | null>(null)
   const [form, setForm] = useState(emptyForm)
@@ -50,14 +52,14 @@ export function ProductsTab({ products, setProducts, brands, getAuthToken }: Pro
 
   const startEdit = (product: Product) => {
     setEditing(product)
-    setForm({ 
-      name_en: product.name_en, 
-      name_ar: product.name_ar, 
-      slug: product.slug, 
-      brand_id: product.brand_id, 
-      image_url: product.image_url || "", 
-      description_en: product.description_en || "", 
-      description_ar: product.description_ar || "" 
+    setForm({
+      name_en: product.name_en,
+      name_ar: product.name_ar,
+      slug: product.slug,
+      brand_id: product.brand_id,
+      image_url: product.image_url || "",
+      description_en: product.description_en || "",
+      description_ar: product.description_ar || ""
     })
     setShowForm(true)
   }
@@ -65,15 +67,13 @@ export function ProductsTab({ products, setProducts, brands, getAuthToken }: Pro
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-    
     try {
       setIsUploading(true)
       const publicUrl = await uploadImageFile(file, "products")
       setForm(prev => ({ ...prev, image_url: publicUrl }))
-      toast.success("تم رفع الصورة بنجاح")
+      toast.success(t("imageUploadSuccess"))
     } catch (error: any) {
-      toast.error(error.message || "فشل رفع الصورة")
-      console.error(error)
+      toast.error(error.message || t("imageUploadError"))
     } finally {
       setIsUploading(false)
       if (fileInputRef.current) fileInputRef.current.value = ""
@@ -82,7 +82,7 @@ export function ProductsTab({ products, setProducts, brands, getAuthToken }: Pro
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!form.name_en || !form.name_ar || !form.brand_id) { toast.error("الاسم والماركة مطلوبين"); return }
+    if (!form.name_en || !form.name_ar || !form.brand_id) { toast.error(t("nameAndBrandRequired")); return }
 
     const token = getAuthToken()
     const slug = form.slug || form.name_en.toLowerCase().replace(/\s+/g, "-")
@@ -95,38 +95,36 @@ export function ProductsTab({ products, setProducts, brands, getAuthToken }: Pro
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
           body: JSON.stringify({ id: editing.id, ...payload }),
         })
-        if (res.ok) { 
+        if (res.ok) {
           const brand = brands.find(b => b.id === payload.brand_id)
-          setProducts(products.map(p => p.id === editing.id ? { ...p, ...payload, brand_name_en: brand?.name_en, brand_name_ar: brand?.name_ar } as Product : p)); 
-          toast.success("تم تحديث المنتج") 
-        }
-        else { toast.error("فشل التحديث") }
+          setProducts(products.map(p => p.id === editing.id ? { ...p, ...payload, brand_name_en: brand?.name_en, brand_name_ar: brand?.name_ar } as Product : p))
+          toast.success(t("productUpdated"))
+        } else { toast.error(t("updateFailed")) }
       } else {
         const res = await fetch("/api/admin/models", {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
           body: JSON.stringify(payload),
         })
-        if (res.ok) { 
-          const data = await res.json(); 
+        if (res.ok) {
+          const data = await res.json()
           const brand = brands.find(b => b.id === payload.brand_id)
           const newProduct = { ...data.item, brand_name_en: brand?.name_en, brand_name_ar: brand?.name_ar }
-          setProducts([...products, newProduct]); 
-          toast.success("تم إضافة المنتج") 
-        }
-        else { toast.error("فشل الإضافة") }
+          setProducts([...products, newProduct])
+          toast.success(t("productAdded"))
+        } else { toast.error(t("addFailed")) }
       }
       resetForm()
-    } catch { toast.error("حدث خطأ") }
+    } catch { toast.error(t("errorOccurred")) }
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm("هل أنت متأكد من حذف هذا المنتج؟")) return
+    if (!confirm(t("confirmDeleteProduct"))) return
     try {
       const token = getAuthToken()
       const res = await fetch(`/api/admin/models?id=${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } })
-      if (res.ok) { setProducts(products.filter(p => p.id !== id)); toast.success("تم حذف المنتج") }
-    } catch { toast.error("فشل الحذف") }
+      if (res.ok) { setProducts(products.filter(p => p.id !== id)); toast.success(t("productDeleted")) }
+    } catch { toast.error(t("deleteFailed")) }
   }
 
   const toggleActive = async (product: Product) => {
@@ -138,30 +136,30 @@ export function ProductsTab({ products, setProducts, brands, getAuthToken }: Pro
         body: JSON.stringify({ id: product.id, is_active: !product.is_active }),
       })
       if (res.ok) { setProducts(products.map(p => p.id === product.id ? { ...p, is_active: !p.is_active } : p)) }
-    } catch { toast.error("فشل التحديث") }
+    } catch { toast.error(t("updateFailed")) }
   }
 
   const filteredProducts = filterBrand === "all" ? products : products.filter(p => p.brand_id === filterBrand)
-  const getBrandName = (brandId: string) => brands.find(b => b.id === brandId)?.name_ar || brandId
+  const getBrandName = (brandId: string) => brands.find(b => b.id === brandId)?.name_en || brandId
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-          <Package className="h-5 w-5 text-gold-400" /> المنتجات (أنواع المضخات) ({filteredProducts.length})
+          <Package className="h-5 w-5 text-gold-400" /> {t("productsTitle")} ({filteredProducts.length})
         </h2>
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <Select value={filterBrand} onValueChange={setFilterBrand}>
             <SelectTrigger className="bg-dark-500 border-white/10 text-white w-full sm:w-[180px]">
-              <SelectValue placeholder="كل الماركات" />
+              <SelectValue placeholder={t("allBrandsFilter")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">كل الماركات</SelectItem>
-              {brands.map(b => <SelectItem key={b.id} value={b.id}>{b.name_ar}</SelectItem>)}
+              <SelectItem value="all">{t("allBrandsFilter")}</SelectItem>
+              {brands.map(b => <SelectItem key={b.id} value={b.id}>{b.name_en}</SelectItem>)}
             </SelectContent>
           </Select>
           <Button onClick={() => { resetForm(); setShowForm(true) }} className="bg-gold-500 text-dark-900 hover:bg-gold-400 whitespace-nowrap" size="sm">
-            <Plus className="h-4 w-4 ml-2" /> إضافة منتج
+            <Plus className="h-4 w-4 ml-2" /> {t("addProductButton")}
           </Button>
         </div>
       </div>
@@ -170,58 +168,52 @@ export function ProductsTab({ products, setProducts, brands, getAuthToken }: Pro
         <Card className="bg-dark-400 border-white/10">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-lg text-white">{editing ? "تعديل المنتج" : "إضافة منتج جديد (نوع)"}</CardTitle>
+              <CardTitle className="text-lg text-white">{editing ? t("editProduct") : t("addNewProduct")}</CardTitle>
               <Button variant="ghost" size="sm" onClick={resetForm}><X className="h-4 w-4" /></Button>
             </div>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <Label className="text-gray-300 text-sm">الماركة *</Label>
+                <Label className="text-gray-300 text-sm">{t("brandSelect")}</Label>
                 <Select value={form.brand_id} onValueChange={v => setForm({...form, brand_id: v})}>
-                  <SelectTrigger className="mt-1 bg-dark-500 border-white/10 text-white"><SelectValue placeholder="اختر الماركة" /></SelectTrigger>
+                  <SelectTrigger className="mt-1 bg-dark-500 border-white/10 text-white"><SelectValue placeholder={t("brandSelect")} /></SelectTrigger>
                   <SelectContent>
-                    {brands.map(b => <SelectItem key={b.id} value={b.id}>{b.name_ar} ({b.name_en})</SelectItem>)}
+                    {brands.map(b => <SelectItem key={b.id} value={b.id}>{b.name_en} ({b.name_ar})</SelectItem>)}
                   </SelectContent>
                 </Select>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-gray-300 text-sm">اسم المنتج (إنجليزي) * (مثال: APm Peripheral Pump)</Label>
+                  <Label className="text-gray-300 text-sm">{t("productNameEn")}</Label>
                   <Input value={form.name_en} onChange={e => setForm({...form, name_en: e.target.value})} className="mt-1 bg-dark-500 border-white/10 text-white" required />
                 </div>
                 <div>
-                  <Label className="text-gray-300 text-sm">اسم المنتج (عربي) * (مثال: مضخة طرد مركزي)</Label>
+                  <Label className="text-gray-300 text-sm">{t("productNameAr")}</Label>
                   <Input value={form.name_ar} onChange={e => setForm({...form, name_ar: e.target.value})} className="mt-1 bg-dark-500 border-white/10 text-white" required />
                 </div>
               </div>
-              
+
               <div>
-                <Label className="text-gray-300 text-sm">صورة المنتج</Label>
+                <Label className="text-gray-300 text-sm">{t("productImage")}</Label>
                 <div className="mt-2 flex flex-col gap-4 p-4 border border-dashed border-white/20 rounded-xl bg-dark-500/50">
                   <div className="flex items-center gap-4">
-                    <Button 
-                      type="button" 
-                      onClick={() => fileInputRef.current?.click()} 
+                    <Button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
                       disabled={isUploading}
                       className="bg-dark-300 text-white hover:bg-dark-200 border border-white/10"
                     >
                       {isUploading ? <Loader2 className="h-4 w-4 ml-2 animate-spin" /> : <UploadCloud className="h-4 w-4 ml-2" />}
-                      رفع من الجهاز
+                      {t("uploadFromDevice")}
                     </Button>
-                    <input 
-                      type="file" 
-                      ref={fileInputRef} 
-                      onChange={handleFileUpload} 
-                      accept="image/*" 
-                      className="hidden" 
-                    />
-                    <span className="text-gray-500 text-sm">أو رابط</span>
-                    <Input 
-                      value={form.image_url} 
-                      onChange={e => setForm({...form, image_url: e.target.value})} 
-                      placeholder="https://..." 
-                      className="bg-dark-500 border-white/10 text-white flex-1" 
+                    <input type="file" ref={fileInputRef} onChange={handleFileUpload} accept="image/*" className="hidden" />
+                    <span className="text-gray-500 text-sm">{t("orUrl")}</span>
+                    <Input
+                      value={form.image_url}
+                      onChange={e => setForm({...form, image_url: e.target.value})}
+                      placeholder="https://..."
+                      className="bg-dark-500 border-white/10 text-white flex-1"
                     />
                   </div>
                   {form.image_url && (
@@ -234,17 +226,17 @@ export function ProductsTab({ products, setProducts, brands, getAuthToken }: Pro
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label className="text-gray-300 text-sm">Slug (رابط مخصص)</Label>
+                  <Label className="text-gray-300 text-sm">Slug</Label>
                   <Input value={form.slug} onChange={e => setForm({...form, slug: e.target.value})} placeholder="apm-peripheral" className="mt-1 bg-dark-500 border-white/10 text-white" />
                 </div>
                 <div>
-                  <Label className="text-gray-300 text-sm">وصف المنتج (عربي)</Label>
+                  <Label className="text-gray-300 text-sm">{t("productDescAr")}</Label>
                   <Input value={form.description_ar} onChange={e => setForm({...form, description_ar: e.target.value})} className="mt-1 bg-dark-500 border-white/10 text-white" />
                 </div>
               </div>
-              
+
               <Button type="submit" className="w-full bg-gold-500 text-dark-900 hover:bg-gold-400 font-semibold h-12" disabled={isUploading}>
-                <Save className="h-5 w-5 ml-2" /> {editing ? "تحديث المنتج" : "إضافة المنتج"}
+                <Save className="h-5 w-5 ml-2" /> {editing ? t("saveChanges") : t("addProductButton")}
               </Button>
             </form>
           </CardContent>
@@ -255,7 +247,7 @@ export function ProductsTab({ products, setProducts, brands, getAuthToken }: Pro
         <Card className="bg-dark-400 border-white/10">
           <CardContent className="py-12 text-center">
             <Package className="h-12 w-12 mx-auto text-gray-500 mb-4" />
-            <p className="text-gray-400">لا توجد منتجات. {brands.length === 0 ? "أضف ماركة أولاً." : "ابدأ بإضافة منتج جديد."}</p>
+            <p className="text-gray-400">{brands.length === 0 ? t("addBrandFirst") : t("addNewProduct")}</p>
           </CardContent>
         </Card>
       ) : (
@@ -275,13 +267,13 @@ export function ProductsTab({ products, setProducts, brands, getAuthToken }: Pro
                       </div>
                     )}
                     <div>
-                      <p className="font-semibold text-white">{product.name_ar} <span className="text-gray-400 text-sm">({product.name_en})</span></p>
-                      <p className="text-xs text-gray-500">الماركة: <span className="text-gold-400">{getBrandName(product.brand_id)}</span> • slug: {product.slug}</p>
+                      <p className="font-semibold text-white">{product.name_en}</p>
+                      <p className="text-xs text-gray-500"><span className="text-gold-400">{getBrandName(product.brand_id)}</span> • slug: {product.slug}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <Badge className={`cursor-pointer text-xs ${product.is_active ? "bg-green-500/20 text-green-400 border-green-500/30" : "bg-gray-500/20 text-gray-400 border-gray-500/30"}`} onClick={() => toggleActive(product)}>
-                      {product.is_active ? "مفعّل" : "معطّل"}
+                      {product.is_active ? t("activeStatus") : t("inactiveStatus")}
                     </Badge>
                     <Button variant="ghost" size="sm" onClick={() => startEdit(product)} className="text-blue-400 hover:text-blue-300 h-8 w-8 p-0"><Edit className="h-4 w-4" /></Button>
                     <Button variant="ghost" size="sm" onClick={() => handleDelete(product.id)} className="text-red-400 hover:text-red-300 h-8 w-8 p-0"><Trash2 className="h-4 w-4" /></Button>

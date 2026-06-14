@@ -20,6 +20,7 @@ import type { SizeChartRow } from "@/components/custom-size-form"
 import { useTranslations } from "next-intl"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { openWhatsAppOrder } from "@/lib/whatsapp"
+import { useLocale } from "@/lib/locale-context"
 
 const GiftPackageSelector = dynamic(
   () => import("@/components/gift-package-selector").then((m) => m.GiftPackageSelector),
@@ -189,6 +190,7 @@ export default function CategoryPage() {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites()
   const { formatPrice } = useCurrencyFormatter()
   const t = useTranslations()
+  const { settings } = useLocale()
 
   useEffect(() => {
     if (category) {

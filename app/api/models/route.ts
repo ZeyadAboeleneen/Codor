@@ -1,23 +1,29 @@
 import { NextResponse } from "next/server"
-import { getDatabase } from "@/lib/mongodb"
+import { supabase, supabaseAdmin } from "@/lib/supabase"
 
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url)
     const brandId = url.searchParams.get("brandId")
 
-    const db = await getDatabase()
-    const query: any = { isActive: true }
-    if (brandId) query.brandId = brandId
+    const client = supabaseAdmin || supabase
 
-    const items = await db.collection("models").find(query).sort({ order: 1 }).toArray()
+    let query = client
+      .from("models")
+      .select("*")
+      .eq("is_active", true)
+      .order("order", { ascending: true })
 
-    const formatted = items.map(item => ({
-      ...item,
-      _id: item._id.toString()
-    }))
+    if (brandId) query = query.eq("brand_id", brandId)
 
-    return NextResponse.json(formatted)
+    const { data: items, error } = await query
+
+    if (error) {
+      console.error("Error fetching models:", error)
+      return NextResponse.json({ error: "Failed to fetch models" }, { status: 500 })
+    }
+
+    return NextResponse.json(items || [])
   } catch (error) {
     console.error("Error fetching models:", error)
     return NextResponse.json({ error: "Failed to fetch models" }, { status: 500 })

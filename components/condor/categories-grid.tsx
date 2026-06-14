@@ -110,7 +110,7 @@ export function CategoriesGrid({ categories, title }: CategoriesGridProps) {
                   <div className="relative aspect-square sm:aspect-[4/3] rounded-lg overflow-hidden bg-dark-500">
                     <Image
                       src={cat.image}
-                      alt={cat.nameKey ? t(cat.nameKey) : (cat.nameAr || cat.name)}
+                      alt={cat.nameKey ? t(cat.nameKey) : ((cat as any).nameAr || cat.name)}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -121,7 +121,7 @@ export function CategoriesGrid({ categories, title }: CategoriesGridProps) {
                     {/* Content overlay */}
                     <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5">
                       <h3 className="text-sm sm:text-lg font-bold text-white mb-0.5 sm:mb-1 font-cairo line-clamp-1">
-                        {cat.nameKey ? t(cat.nameKey) : (cat.nameAr || cat.name)}
+                        {cat.nameKey ? t(cat.nameKey) : ((cat as any).nameAr || cat.name)}
                       </h3>
                       <p className="text-[10px] sm:text-xs text-gold-400/80 uppercase tracking-wider font-medium line-clamp-1">
                         {cat.name}

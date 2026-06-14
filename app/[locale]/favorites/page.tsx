@@ -17,6 +17,7 @@ import { useTranslations } from "next-intl"
 import { CustomSizeForm, SizeChartRow } from "@/components/custom-size-form"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
 import { openWhatsAppOrder } from "@/lib/whatsapp"
+import { useLocale } from "@/lib/locale-context"
 
 interface FavoriteItem {
   id: string
@@ -44,6 +45,7 @@ interface FavoriteItem {
 export default function FavoritesPage() {
   const { state: favoritesState, removeFromFavorites, clearFavorites } = useFavorites()
   const { formatPrice } = useCurrencyFormatter()
+  const { settings } = useLocale()
   const t = useTranslations()
   const [showClearConfirm, setShowClearConfirm] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<FavoriteItem | null>(null)
@@ -320,7 +322,7 @@ export default function FavoritesPage() {
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-xl font-medium">{selectedProduct.name}</h3>
-                  <p className="text-gray-400 text-sm">Select your preferred size</p>
+                  <p className="text-gray-400 text-sm">{t("selectYourSize")}</p>
                 </div>
                 <div className="flex">
                   <button
@@ -415,7 +417,7 @@ export default function FavoritesPage() {
               
               {/* Quantity Selection */}
               <div className="mb-4">
-                <h4 className="font-medium mb-3">Quantity</h4>
+                <h4 className="font-medium mb-3">{t("quantity")}</h4>
                 <div className="flex items-center space-x-3">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -440,7 +442,7 @@ export default function FavoritesPage() {
 
               <div className="flex justify-between items-center py-4 border-t border-dark-400">
                 <div>
-                  <span className="text-gray-400">Total:</span>
+                  <span className="text-gray-400">{t("total")}:</span>
                   <div className="text-xl font-medium ml-2">
                     {(() => {
                       const qty = quantity;
@@ -527,7 +529,7 @@ export default function FavoritesPage() {
                 >
                   <span className="relative z-10">
                     <ShoppingCart className="h-4 w-4 mr-2" />
-                    {selectedProduct?.isOutOfStock ? "Out of Stock" : "Buy Now"}
+                    {selectedProduct?.isOutOfStock ? t("outOfStock") : t("buyNow")}
                   </span>
                   <motion.span 
                     className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100"
@@ -674,7 +676,7 @@ export default function FavoritesPage() {
               >
                 <Link href="/products">
                   <Button className="bg-black text-white hover:bg-dark-700 rounded-full px-8 py-6 relative overflow-hidden group">
-                    <span className="relative z-10">Explore Collections</span>
+                    <span className="relative z-10">{t("exploreCollections")}</span>
                     <motion.span 
                       className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100"
                       initial={{ x: "-100%" }}
@@ -745,7 +747,7 @@ export default function FavoritesPage() {
                                   transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
                                   viewport={{ once: true }}
                                 >
-                                  <Badge className="bg-gradient-to-r from-red-600 to-red-800 text-white text-xs px-2 py-1">Out of Stock</Badge>
+                                  <Badge className="bg-gradient-to-r from-red-600 to-red-800 text-white text-xs px-2 py-1">{t("outOfStockBadge")}</Badge>
                                 </motion.div>
                               )}
                               {item.isBestseller && !item.isOutOfStock && (
@@ -755,7 +757,7 @@ export default function FavoritesPage() {
                                   transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
                                   viewport={{ once: true }}
                                 >
-                                  <Badge className="bg-black text-white text-xs px-2 py-1">Bestseller</Badge>
+                                  <Badge className="bg-black text-white text-xs px-2 py-1">{t("bestsellerBadge")}</Badge>
                                 </motion.div>
                               )}
                               {item.isNew && !item.isBestseller && !item.isOutOfStock && (
@@ -765,7 +767,7 @@ export default function FavoritesPage() {
                                   transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
                                   viewport={{ once: true }}
                                 >
-                                  <Badge variant="secondary" className="text-xs px-2 py-1">New</Badge>
+                                  <Badge variant="secondary" className="text-xs px-2 py-1">{t("newBadge")}</Badge>
                                 </motion.div>
                               )}
                             </div>

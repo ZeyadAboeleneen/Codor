@@ -17,7 +17,7 @@ type CountryConfig = {
 const getInstantRate = (currencyCode: string): number => {
   const cached = getCachedRate(currencyCode)
   if (cached !== null) return cached
-  return FALLBACK_EXCHANGE_RATES_USD[currencyCode] ?? 1
+  return FALLBACK_EXCHANGE_RATES_EGP[currencyCode] ?? 1
 }
 
 export type LocaleSettings = {
@@ -151,7 +151,7 @@ const COUNTRY_OPTIONS: CountryConfig[] = [
   }
 ]
 
-const STORAGE_KEY = "ala_locale_settings"
+const STORAGE_KEY = "ala_locale_settings_v2"
 
 const LocaleContext = createContext<LocaleContextValue | undefined>(undefined)
 
@@ -166,23 +166,25 @@ const createSettings = (config: CountryConfig, language: Language, rate = 1): Lo
 })
 
 // Cache for exchange rates with timestamp
-const RATE_CACHE_KEY = "ala_exchange_rates_cache"
+const RATE_CACHE_KEY = "ala_exchange_rates_cache_v2"
 const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours in milliseconds
 
-const FALLBACK_EXCHANGE_RATES_USD: Record<string, number> = {
-  USD: 1,
-  AED: 3.6725,
-  SAR: 3.75,
-  KWD: 0.308,
-  QAR: 3.64,
-  GBP: 0.79,
-  EGP: 48.5,
-  OMR: 0.3845,
-  BHD: 0.376,
-  IQD: 1310,
-  JOD: 0.709,
-  TRY: 32,
-  LBP: 89500,
+// Rates are EGP-based (units of local currency per 1 EGP)
+// because all product prices are stored in EGP in the database
+const FALLBACK_EXCHANGE_RATES_EGP: Record<string, number> = {
+  EGP: 1,
+  USD: 0.0206,
+  AED: 0.0757,
+  SAR: 0.0773,
+  KWD: 0.00635,
+  QAR: 0.0751,
+  GBP: 0.0163,
+  OMR: 0.00793,
+  BHD: 0.00776,
+  IQD: 27.01,
+  JOD: 0.01462,
+  TRY: 0.660,
+  LBP: 1845,
 }
 
 type RateCache = {
@@ -225,10 +227,11 @@ const setCachedRate = (currencyCode: string, rate: number) => {
   }
 }
 
+// Returns EGP-based rate: how many units of currencyCode equal 1 EGP
 const fetchExchangeRate = async (currencyCode: string, fallbackRate?: number): Promise<number> => {
   try {
-    // USD is always 1
-    if (currencyCode === "USD") return 1
+    // EGP is always 1 (prices are stored in EGP)
+    if (currencyCode === "EGP") return 1
 
     // Check cache first
     const cachedRate = getCachedRate(currencyCode)
@@ -236,9 +239,9 @@ const fetchExchangeRate = async (currencyCode: string, fallbackRate?: number): P
       return cachedRate
     }
 
-    // Try primary API: exchangerate.host
+    // Try primary API: exchangerate.host with EGP as base
     try {
-      const response = await fetch(`https://api.exchangerate.host/latest?base=USD&symbols=${currencyCode}`, {
+      const response = await fetch(`https://api.exchangerate.host/latest?base=EGP&symbols=${currencyCode}`, {
         cache: 'no-store'
       })
       if (response.ok) {
@@ -253,9 +256,9 @@ const fetchExchangeRate = async (currencyCode: string, fallbackRate?: number): P
       console.warn("Primary exchange rate API failed, trying fallback...", error)
     }
 
-    // Fallback API: exchangerate-api.com
+    // Fallback API: exchangerate-api.com with EGP as base
     try {
-      const response = await fetch(`https://api.exchangerate-api.com/v4/latest/USD`, {
+      const response = await fetch(`https://api.exchangerate-api.com/v4/latest/EGP`, {
         cache: 'no-store'
       })
       if (response.ok) {
@@ -270,18 +273,20 @@ const fetchExchangeRate = async (currencyCode: string, fallbackRate?: number): P
       console.warn("Fallback exchange rate API failed", error)
     }
 
-    // If all APIs fail, use fallback rate from storage or default to 1
+    // If all APIs fail, use fallback rate from storage or hardcoded EGP-based fallback
     if (fallbackRate && fallbackRate > 0) {
       console.warn(`Using fallback rate for ${currencyCode}: ${fallbackRate}`)
       return fallbackRate
     }
 
-    console.error(`Failed to fetch exchange rate for ${currencyCode}, using default rate of 1`)
+    const hardcoded = FALLBACK_EXCHANGE_RATES_EGP[currencyCode]
+    if (hardcoded) return hardcoded
+
+    console.error(`Failed to fetch exchange rate for ${currencyCode}, using 1`)
     return 1
   } catch (error) {
     console.error("Failed to fetch exchange rate", error)
-    // Use fallback rate if available, otherwise return 1
-    return fallbackRate && fallbackRate > 0 ? fallbackRate : 1
+    return fallbackRate && fallbackRate > 0 ? fallbackRate : (FALLBACK_EXCHANGE_RATES_EGP[currencyCode] ?? 1)
   }
 }
 

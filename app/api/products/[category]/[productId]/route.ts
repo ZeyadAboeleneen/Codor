@@ -30,8 +30,8 @@ const transformProduct = (product: any): Product => {
     packagePrice: product.package_price,
     packageOriginalPrice: product.package_original_price,
     giftPackageSizes: product.gift_package_sizes || [],
-    createdAt: product.created_at ? new Date(product.created_at) : new Date(),
-    updatedAt: product.updated_at ? new Date(product.updated_at) : new Date(),
+    created_at: product.created_at ? new Date(product.created_at) : new Date(),
+    updated_at: product.updated_at ? new Date(product.updated_at) : new Date(),
   }
 }
 

@@ -13,10 +13,12 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { ArrowLeft, User, Save } from "lucide-react"
 import { Navigation } from "@/components/navigation"
 import { useAuth } from "@/lib/auth-context"
+import { useTranslations } from "next-intl"
 
 export default function EditProfilePage() {
   const { state: authState, updateUser } = useAuth()
   const router = useRouter()
+  const t = useTranslations()
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState("")
@@ -42,8 +44,8 @@ export default function EditProfilePage() {
     if (authState.user) {
       setFormData((prev) => ({
         ...prev,
-        name: authState.user.name,
-        email: authState.user.email,
+        name: authState.user?.name ?? "",
+        email: authState.user?.email ?? "",
       }))
     }
   }, [authState, router])
@@ -136,7 +138,7 @@ export default function EditProfilePage() {
           <div className="container mx-auto px-4 sm:px-6">
             <div className="text-center py-12 sm:py-16">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black mx-auto mb-4"></div>
-              <p className="text-gray-400">Loading profile...</p>
+              <p className="text-gray-400">{t("loadingProfile")}</p>
             </div>
           </div>
         </section>
@@ -163,17 +165,17 @@ export default function EditProfilePage() {
               className="inline-flex items-center text-gray-400 hover:text-white transition-colors mb-4 sm:mb-6"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to My Account
+              {t("backToAccount")}
             </Link>
-            <h1 className="text-2xl sm:text-3xl font-light tracking-wider mb-2">Edit Profile</h1>
-            <p className="text-gray-400">Update your account information</p>
+            <h1 className="text-2xl sm:text-3xl font-light tracking-wider mb-2">{t("editProfile")}</h1>
+            <p className="text-gray-400">{t("updateAccountInfo")}</p>
           </motion.div>
 
           <div className="max-w-2xl mx-auto">
             {success && (
               <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
                 <Alert className="border-green-200 bg-green-50">
-                  <AlertDescription className="text-green-600">Profile updated successfully!</AlertDescription>
+                  <AlertDescription className="text-green-600">{t("profileUpdatedSuccess")}</AlertDescription>
                 </Alert>
               </motion.div>
             )}
@@ -195,32 +197,32 @@ export default function EditProfilePage() {
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <User className="mr-2 h-5 w-5" />
-                    Profile Information
+                    {t("profileInfoTitle")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                       <div>
-                        <Label htmlFor="name" className="text-sm font-medium">Full Name *</Label>
+                        <Label htmlFor="name" className="text-sm font-medium">{t("fullName")} *</Label>
                         <Input
                           id="name"
                           value={formData.name}
                           onChange={(e) => handleChange("name", e.target.value)}
-                          placeholder="Your full name"
+                          placeholder={t("yourFullNamePlaceholder")}
                           required
                           className="mt-1 h-12"
                         />
                       </div>
 
                       <div>
-                        <Label htmlFor="email" className="text-sm font-medium">Email Address *</Label>
+                        <Label htmlFor="email" className="text-sm font-medium">{t("emailAddress")} *</Label>
                         <Input
                           id="email"
                           type="email"
                           value={formData.email}
                           onChange={(e) => handleChange("email", e.target.value)}
-                          placeholder="your@email.com"
+                          placeholder={t("yourEmail")}
                           required
                           className="mt-1 h-12"
                         />
@@ -228,16 +230,16 @@ export default function EditProfilePage() {
                     </div>
 
                     <div className="border-t pt-6">
-                      <h3 className="text-base sm:text-lg font-medium mb-4">Change Password (Optional)</h3>
+                      <h3 className="text-base sm:text-lg font-medium mb-4">{t("changePasswordOpt")}</h3>
                       <div className="space-y-4">
                         <div>
-                          <Label htmlFor="currentPassword" className="text-sm font-medium">Current Password</Label>
+                          <Label htmlFor="currentPassword" className="text-sm font-medium">{t("currentPasswordLabel")}</Label>
                           <Input
                             id="currentPassword"
                             type="password"
                             value={formData.currentPassword}
                             onChange={(e) => handleChange("currentPassword", e.target.value)}
-                            placeholder="Enter current password"
+                            placeholder={t("enterCurrentPassword")}
                             autoComplete="current-password"
                             className="mt-1 h-12"
                           />
@@ -245,26 +247,26 @@ export default function EditProfilePage() {
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
-                            <Label htmlFor="newPassword" className="text-sm font-medium">New Password</Label>
+                            <Label htmlFor="newPassword" className="text-sm font-medium">{t("newPasswordLabel")}</Label>
                             <Input
                               id="newPassword"
                               type="password"
                               value={formData.newPassword}
                               onChange={(e) => handleChange("newPassword", e.target.value)}
-                              placeholder="Enter new password"
+                              placeholder={t("enterNewPassword")}
                               autoComplete="new-password"
                               className="mt-1 h-12"
                             />
                           </div>
 
                           <div>
-                            <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirm New Password</Label>
+                            <Label htmlFor="confirmPassword" className="text-sm font-medium">{t("confirmNewPasswordLabel")}</Label>
                             <Input
                               id="confirmPassword"
                               type="password"
                               value={formData.confirmPassword}
                               onChange={(e) => handleChange("confirmPassword", e.target.value)}
-                              placeholder="Confirm new password"
+                              placeholder={t("confirmNewPasswordPlaceholder")}
                               autoComplete="new-password"
                               className="mt-1 h-12"
                             />
@@ -276,7 +278,7 @@ export default function EditProfilePage() {
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center sm:justify-end gap-3 sm:gap-4 pt-6">
                       <Link href="/account" className="order-2 sm:order-1">
                         <Button type="button" variant="outline" className="w-full sm:w-auto h-12">
-                          Cancel
+                          {t("cancel")}
                         </Button>
                       </Link>
                       <Button 
@@ -287,12 +289,12 @@ export default function EditProfilePage() {
                         {loading ? (
                           <>
                             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                            Updating...
+                            {t("updating")}
                           </>
                         ) : (
                           <>
                             <Save className="mr-2 h-4 w-4" />
-                            Save Changes
+                            {t("saveChanges")}
                           </>
                         )}
                       </Button>

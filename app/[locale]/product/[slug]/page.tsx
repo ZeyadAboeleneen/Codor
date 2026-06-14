@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { ShoppingCart, ArrowRight, Info, Cpu } from "lucide-react"
@@ -13,11 +14,12 @@ import { toast } from "sonner"
 export default function ProductDetailsPage() {
   const params = useParams()
   const router = useRouter()
+  const t = useTranslations()
   const slug = params.slug as string
   const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const { formatPrice } = useCurrencyFormatter()
-  const { addToCart } = useCart()
+  const { addItem: addToCart } = useCart()
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -41,12 +43,16 @@ export default function ProductDetailsPage() {
   const handleAddToCart = (model: any) => {
     addToCart({
       id: model.id,
-      name: `${data.name_ar} - ${model.name_ar || model.name_en}`,
+      productId: model.id,
+      name: `${data.name_en} - ${model.name_en || model.name_ar}`,
       price: model.price,
       quantity: 1,
+      size: model.size || "",
+      volume: model.volume || "",
       image: model.images?.[0] || data.image_url || "/placeholder.svg",
+      category: data.category || "",
     })
-    toast.success("تم إضافة الموديل إلى السلة")
+    toast.success(t("modelAddedToCart"))
   }
 
   if (loading) {
@@ -67,9 +73,9 @@ export default function ProductDetailsPage() {
         <Navigation />
         <main className="flex-grow pt-32 pb-12 flex items-center justify-center text-white">
           <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">المنتج غير موجود</h1>
+            <h1 className="text-2xl font-bold mb-4">{t("productNotFound")}</h1>
             <button onClick={() => router.push('/products')} className="text-gold-500 hover:underline">
-              العودة للمنتجات
+              {t("backToProducts")}
             </button>
           </div>
         </main>
@@ -79,52 +85,45 @@ export default function ProductDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-dark-600 flex flex-col" dir="rtl">
+    <div className="min-h-screen bg-dark-600 flex flex-col">
       <Navigation />
-      
+
       <main className="flex-grow pt-24 pb-12">
-        {/* Breadcrumb & Navigation */}
         <div className="condor-container mb-6">
-          <button 
+          <button
             onClick={() => router.back()}
             className="flex items-center gap-2 text-gray-400 hover:text-gold-500 transition-colors"
           >
             <ArrowRight className="w-5 h-5" />
-            <span>العودة</span>
+            <span>{t("goBack")}</span>
           </button>
         </div>
 
-        {/* Product Overview Section */}
         <section className="condor-container mb-16">
           <div className="bg-dark-500 rounded-2xl border border-white/5 overflow-hidden flex flex-col md:flex-row">
-            {/* Image Box */}
             <div className="w-full md:w-1/3 bg-dark-300 relative aspect-square md:aspect-auto flex items-center justify-center p-8">
               {data.brand && (
                 <div className="absolute top-4 right-4 z-10 bg-dark-900/80 backdrop-blur border border-white/10 px-3 py-1.5 rounded-lg">
-                  <span className="text-gold-400 font-bold text-sm">{data.brand.name_ar}</span>
+                  <span className="text-gold-400 font-bold text-sm">{data.brand.name_en}</span>
                 </div>
               )}
               <div className="relative w-full h-full min-h-[300px]">
                 <Image
                   src={data.image_url || "/placeholder.svg"}
-                  alt={data.name_ar}
+                  alt={data.name_en}
                   fill
                   className="object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
                 />
               </div>
             </div>
 
-            {/* Product Info */}
             <div className="w-full md:w-2/3 p-8 md:p-12 flex flex-col justify-center">
               <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
-                {data.name_ar}
-              </h1>
-              <h2 className="text-xl text-gray-400 mb-6 font-medium">
                 {data.name_en}
-              </h2>
-              
+              </h1>
+
               <div className="w-20 h-1 bg-gradient-to-r from-gold-500 to-gold-600 rounded-full mb-8" />
-              
+
               <div className="prose prose-invert max-w-none">
                 <p className="text-gray-300 leading-relaxed text-lg">
                   {data.description_ar}
@@ -139,11 +138,10 @@ export default function ProductDetailsPage() {
           </div>
         </section>
 
-        {/* Models Section */}
         <section className="condor-container">
           <div className="flex items-center gap-3 mb-8">
             <Cpu className="w-8 h-8 text-gold-500" />
-            <h2 className="text-2xl font-bold text-white">الموديلات المتاحة</h2>
+            <h2 className="text-2xl font-bold text-white">{t("availableModels")}</h2>
           </div>
 
           {data.models && data.models.length > 0 ? (
@@ -151,13 +149,13 @@ export default function ProductDetailsPage() {
               <table className="w-full text-right text-white min-w-[800px]">
                 <thead className="bg-dark-500 text-gold-400 border-b border-white/10">
                   <tr>
-                    <th className="px-6 py-4 font-semibold rounded-tr-xl">الموديل</th>
-                    <th className="px-6 py-4 font-semibold">القدرة (حصان)</th>
-                    <th className="px-6 py-4 font-semibold">كيلو وات</th>
-                    <th className="px-6 py-4 font-semibold">أقصى رفع</th>
-                    <th className="px-6 py-4 font-semibold">الفولت</th>
-                    <th className="px-6 py-4 font-semibold">السعر</th>
-                    <th className="px-6 py-4 font-semibold rounded-tl-xl text-center">إجراء</th>
+                    <th className="px-6 py-4 font-semibold rounded-tr-xl">{t("modelName")}</th>
+                    <th className="px-6 py-4 font-semibold">{t("powerHP")}</th>
+                    <th className="px-6 py-4 font-semibold">{t("powerKW")}</th>
+                    <th className="px-6 py-4 font-semibold">{t("maxHead")}</th>
+                    <th className="px-6 py-4 font-semibold">{t("voltageLabel")}</th>
+                    <th className="px-6 py-4 font-semibold">{t("priceLabel")}</th>
+                    <th className="px-6 py-4 font-semibold rounded-tl-xl text-center">{t("actionLabel")}</th>
                   </tr>
                 </thead>
                 <tbody className="bg-dark-400 divide-y divide-white/5">
@@ -166,7 +164,6 @@ export default function ProductDetailsPage() {
                       <td className="px-6 py-4 font-bold">
                         <div className="flex flex-col">
                           <span>{model.name_en}</span>
-                          {model.name_ar && <span className="text-sm text-gray-400">{model.name_ar}</span>}
                         </div>
                       </td>
                       <td className="px-6 py-4">{model.hp || "-"}</td>
@@ -187,7 +184,7 @@ export default function ProductDetailsPage() {
                           }`}
                         >
                           <ShoppingCart className="w-4 h-4" />
-                          <span>{model.stock === 0 ? "غير متوفر" : "إضافة"}</span>
+                          <span>{model.stock === 0 ? t("stockUnavailable") : t("addModel")}</span>
                         </button>
                       </td>
                     </tr>
@@ -198,8 +195,8 @@ export default function ProductDetailsPage() {
           ) : (
             <div className="bg-dark-500 rounded-xl p-12 text-center border border-white/5">
               <Info className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-              <h3 className="text-xl text-white font-semibold mb-2">لا توجد موديلات مضافة</h3>
-              <p className="text-gray-400">هذا المنتج لا يحتوي على موديلات مسجلة حتى الآن.</p>
+              <h3 className="text-xl text-white font-semibold mb-2">{t("noModelsYet")}</h3>
+              <p className="text-gray-400">{t("noModelsYet")}</p>
             </div>
           )}
         </section>

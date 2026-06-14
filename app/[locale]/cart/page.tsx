@@ -15,14 +15,15 @@ import { useAuth } from "@/lib/auth-context"
 import { CheckoutProgress } from "@/components/checkout-progress"
 import { CartItem } from "@/components/cart-item"
 import { useCurrencyFormatter } from "@/hooks/use-currency"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 
 export default function CartPage() {
   const { state, dispatch } = useCart()
   const { state: authState } = useAuth()
   const { formatPrice } = useCurrencyFormatter()
   const t = useTranslations()
-  
+  const locale = useLocale()
+  const settings = { language: locale }
 
   const subtotal = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const total = subtotal 
@@ -116,7 +117,7 @@ export default function CartPage() {
               className="h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 rounded-full"
             />
             <p className="text-gray-400 text-sm sm:text-base">
-              {state.items.length} item{state.items.length !== 1 ? "s" : ""} in your cart
+              {state.items.length} {t("itemsInCartCount")}
             </p>
           </motion.div>
 
@@ -133,7 +134,7 @@ export default function CartPage() {
                 <AlertDescription className="text-gray-300">
                   <div className={`flex items-center justify-between flex-wrap gap-3 ${settings.language === "ar" ? "flex-row-reverse" : ""}`}>
                     <span className="text-sm sm:text-base">
-                      Sign up to easily track your orders and enjoy a better shopping experience!
+                      {t("signUpToTrack")}
                     </span>
                     <Link href="/auth/register?redirect=/cart">
                       <Button 
@@ -204,7 +205,7 @@ export default function CartPage() {
                   <CardContent className="space-y-4">
                     {/* Item Count */}
                     <div className="flex items-center justify-between text-sm text-gray-400">
-                      <span>Items ({state.items.length})</span>
+                      <span>{t("items")} ({state.items.length})</span>
                       <span>{formatPrice(subtotal)}</span>
                     </div>
 
@@ -213,7 +214,7 @@ export default function CartPage() {
                     <Separator className="bg-gradient-to-r from-purple-200 to-pink-200" />
 
                     <div className="flex justify-between text-lg font-medium">
-                      <span>Total</span>
+                      <span>{t("total")}</span>
                       <span>{formatPrice(total)}</span>
                     </div>
 
@@ -222,10 +223,10 @@ export default function CartPage() {
                     {!authState.isAuthenticated && (
                       <Alert className="bg-purple-50 border-purple-200">
                         <AlertDescription className="text-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                          <span>Sign up first to easily track your order and enjoy a smoother checkout experience.</span>
+                          <span>{t("signUpToTrack")}</span>
                           <Link href="/auth/register?redirect=/cart">
                             <Button variant="outline" size="sm" className="rounded-full">
-                              Go to Sign Up
+                              {t("signUp")}
                             </Button>
                           </Link>
                         </AlertDescription>
@@ -246,8 +247,8 @@ export default function CartPage() {
 
                     {/* Additional Info */}
                     <div className="text-center text-xs sm:text-sm text-gray-400 space-y-1">
-                      <p>All prices include shipping.</p>
-                      <p>Secure checkout</p>
+                      <p>{t("allPricesIncludeShipping")}</p>
+                      <p>{t("secureCheckout")}</p>
                     </div>
                   </CardContent>
                 </Card>

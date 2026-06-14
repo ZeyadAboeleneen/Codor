@@ -1,10 +1,6 @@
 import { MongoClient, type Db } from "mongodb"
 
-if (!process.env.MONGODB_URI) {
-  throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
-}
-
-const uri = process.env.MONGODB_URI
+const uri = process.env.MONGODB_URI || ""
 
 // Windows-specific options for local development
 const isWindows = process.platform === 'win32'
@@ -25,17 +21,21 @@ declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined
 }
 
-if (process.env.NODE_ENV === "development") {
-  if (!global._mongoClientPromise) {
-    console.log("🔄 [MongoDB] Creating new client connection...")
+if (uri) {
+  if (process.env.NODE_ENV === "development") {
+    if (!global._mongoClientPromise) {
+      console.log("🔄 [MongoDB] Creating new client connection...")
+      client = new MongoClient(uri, options)
+      global._mongoClientPromise = client.connect()
+    }
+    clientPromise = global._mongoClientPromise!
+  } else {
+    console.log("🔄 [MongoDB] Creating production client connection...")
     client = new MongoClient(uri, options)
-    global._mongoClientPromise = client.connect()
+    clientPromise = client.connect()
   }
-  clientPromise = global._mongoClientPromise
 } else {
-  console.log("🔄 [MongoDB] Creating production client connection...")
-  client = new MongoClient(uri, options)
-  clientPromise = client.connect()
+  clientPromise = Promise.reject(new Error("MONGODB_URI is not configured"))
 }
 
 export default clientPromise
@@ -60,6 +60,9 @@ async function ensureIndexes(db: Db) {
 }
 
 export async function getDatabase(): Promise<Db> {
+  if (!process.env.MONGODB_URI) {
+    throw new Error("MONGODB_URI is not configured. This feature requires MongoDB.")
+  }
   try {
     const client = await clientPromise
     const dbName = process.env.MONGODB_DB || process.env.MONGODB_DB_NAME || "condor"

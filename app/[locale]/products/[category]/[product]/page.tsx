@@ -806,7 +806,7 @@ export default function ProductDetailPage() {
               {/* Options & Quantity */}
               {!product.isGiftPackage && (
                 <div className="space-y-6">
-                  <h3 className="text-base sm:text-lg font-medium text-white">المواصفات الفنية والكمية</h3>
+                  <h3 className="text-base sm:text-lg font-medium text-white">{t("specsAndQuantity")}</h3>
                   <CustomSizeForm
                     controller={{
                       isCustomSizeMode,
@@ -846,7 +846,7 @@ export default function ProductDetailPage() {
 
                   {/* Quantity Selection in Main Content */}
                   <div className="flex items-center space-x-4 pt-2">
-                    <span className="text-sm font-medium text-gray-300">الكمية:</span>
+                    <span className="text-sm font-medium text-gray-300">{t("quantityLabel")}</span>
                     <div className="flex items-center space-x-2 bg-dark-500 rounded-lg p-1 border border-white/5">
                       <motion.button
                         whileHover={{ scale: 1.05 }}
@@ -1059,7 +1059,7 @@ export default function ProductDetailPage() {
                     aria-label={product.isOutOfStock ? "Out of stock" : "Buy Now"}
                   >
                     <ShoppingCart className="mr-1 h-4 w-4" />
-                    <span className="whitespace-nowrap">{product.isOutOfStock || (!isCustomSizeMode && selectedSize >= 0 && product.sizes[selectedSize]?.stockCount !== undefined && product.sizes[selectedSize].stockCount === 0) ? "نفذ المخزون" : "أضف للسلة"}</span>
+                    <span className="whitespace-nowrap">{product.isOutOfStock || (!isCustomSizeMode && selectedSize >= 0 && product.sizes[selectedSize]?.stockCount !== undefined && product.sizes[selectedSize].stockCount === 0) ? t("outOfStock") : t("addToCartButton")}</span>
                   </motion.button>
                 </div>
               </div>
@@ -1234,7 +1234,7 @@ export default function ProductDetailPage() {
                     <Star className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400" />
                   </div>
                   <p className="text-gray-400 max-w-md mx-auto text-sm sm:text-base">
-                    لا توجد تقييمات لهذا المنتج حتى الآن.
+                    {t("noReviewsYet")}
                   </p>
                 </div>
               ) : (
