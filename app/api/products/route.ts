@@ -9,8 +9,9 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const brandId = searchParams.get("brand")
+    const search = searchParams.get("search")
     const limit = Math.min(Math.max(parseInt(searchParams.get("limit") || "50", 10), 1), 100)
-    
+
     let query = supabase
       .from("products")
       .select(`
@@ -24,6 +25,10 @@ export async function GET(request: NextRequest) {
 
     if (brandId) {
       query = query.eq("brand_id", brandId)
+    }
+
+    if (search) {
+      query = query.or(`name_en.ilike.%${search}%,name_ar.ilike.%${search}%,description_en.ilike.%${search}%,description_ar.ilike.%${search}%`)
     }
 
     const { data: products, error } = await query

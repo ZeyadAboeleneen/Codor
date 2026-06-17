@@ -11,7 +11,6 @@
   "signOut": "تسجيل الخروج",
   "myAccount": "حسابي",
   "adminDashboard": "لوحة التحكم",
-
   "heroTitle1": "مضخات المياه الإيطالية",
   "heroSubtitle1": "جودة عالمية بضمان مصري — اكتشف تشكيلتنا من أفضل الماركات الإيطالية",
   "heroTitle2": "المضخات الغاطسة",
@@ -20,7 +19,6 @@
   "browseCategories": "تصفح الفئات",
   "discoverMore": "اكتشف المزيد",
   "contactUs": "تواصل معنا",
-
   "ourBrands": "علاماتنا التجارية",
   "browseByCategory": "تصفح الفئات",
   "categorySubtitle": "اكتشف مجموعتنا الواسعة من مضخات المياه المصنفة حسب الاستخدام",
@@ -28,7 +26,6 @@
   "viewAll": "عرض الكل",
   "viewAllProducts": "عرض جميع المنتجات",
   "noProductsAvailable": "لا توجد منتجات حالياً",
-
   "centrifugalPumps": "مضخات طرد مركزي",
   "submersiblePumps": "مضخات غاطسة",
   "peripheralPumps": "مضخات طرفية",
@@ -37,12 +34,10 @@
   "submersibleDesc": "مضخات غاطسة للآبار العميقة بكفاءة وموثوقية عالية",
   "peripheralDesc": "مضخات طرفية اقتصادية للمنازل والمزارع الصغيرة",
   "pressureDesc": "مضخات ضغط عالي للمباني الشاهقة والمشاريع الكبرى",
-
   "newBadge": "جديد",
   "bestsellerBadge": "الأكثر مبيعاً",
   "outOfStockBadge": "نفذ المخزون",
   "discountBadge": "خصم",
-
   "footerBrandDesc": "كوندور مصر — الوكيل المعتمد لأفضل ماركات مضخات المياه الإيطالية. نقدم حلول ضخ المياه بجودة عالمية وخدمة ما بعد البيع المتميزة.",
   "categoriesFooter": "الفئات",
   "quickLinks": "روابط سريعة",
@@ -51,7 +46,6 @@
   "allRightsReserved": "جميع الحقوق محفوظة.",
   "madeBy": "صُنع بواسطة",
   "contactViaWhatsapp": "تواصل عبر واتساب",
-
   "selectSize": "اختر المقاس المفضل",
   "addToCart": "أضف إلى السلة",
   "outOfStock": "نفدت الكمية",
@@ -191,7 +185,6 @@
   "orderSummary": "ملخص الطلب",
   "loadMore": "عرض المزيد",
   "searchPlaceholder": "ابحث عن منتجات، علامات تجارية...",
-
   "goBack": "العودة",
   "productNotFound": "المنتج غير موجود",
   "backToProducts": "العودة للمنتجات",
@@ -207,7 +200,6 @@
   "stockUnavailable": "غير متوفر",
   "addModel": "إضافة",
   "exploreNow": "استكشف الآن",
-
   "adminLoading": "جاري تحميل لوحة التحكم...",
   "dashboard": "لوحة التحكم",
   "totalOrders": "إجمالي الطلبات",
@@ -228,7 +220,6 @@
   "productsTab": "المنتجات",
   "modelsTab": "الموديلات",
   "messagesTab": "الرسائل",
-
   "activeStatus": "مفعّل",
   "inactiveStatus": "معطّل",
   "featuredBadge": "مميز",
@@ -248,7 +239,6 @@
   "deleteFailed": "فشل الحذف",
   "imageUploadSuccess": "تم رفع الصورة بنجاح",
   "imageUploadError": "فشل رفع الصورة",
-
   "brandsTitle": "الماركات",
   "logoUploadSuccess": "تم رفع الشعار بنجاح",
   "logoUploadError": "فشل رفع الشعار",
@@ -266,7 +256,6 @@
   "orUrl": "أو",
   "imageUrl": "رابط الصورة",
   "noBrandsYet": "لا توجد ماركات. ابدأ بإضافة الأولى.",
-
   "productsTitle": "المنتجات (أنواع المضخات)",
   "productUpdated": "تم تحديث المنتج",
   "productAdded": "تم إضافة المنتج",
@@ -283,7 +272,6 @@
   "productSlug": "Slug (رابط مخصص)",
   "addProductButton": "إضافة منتج",
   "addBrandFirst": "لا توجد منتجات. أضف ماركة أولاً.",
-
   "modelsTitle": "الموديلات (التفاصيل والأسعار)",
   "requiredFieldsVariant": "الحقول المطلوبة: الاسم، الماركة، المنتج، السعر",
   "modelUpdated": "تم تحديث الموديل",
@@ -324,7 +312,6 @@
   "featuredModel": "موديل مميز (يظهر في الصفحة الرئيسية)",
   "selectBrandFirst": "اختر ماركة أولاً",
   "allProductsFilter": "كل المنتجات",
-
   "heroImagesTitle": "صور الهيرو الرئيسية",
   "imageUploadedSuccess": "تم رفع الصورة بنجاح",
   "titleAndImageRequired": "العنوان والصورة مطلوبين",
@@ -352,7 +339,6 @@
   "addSlide": "إضافة الشريحة",
   "linkedToProduct": "مرتبطة بمنتج",
   "linkedUrl": "رابط",
-
   "discountCodesTitle": "أكواد الخصم",
   "loadingCodes": "جاري تحميل الأكواد...",
   "noDiscountCodes": "لا توجد أكواد خصم.",
@@ -389,7 +375,6 @@
   "discountCodeAddFailed": "فشل إضافة كود الخصم",
   "discountCodeAddError": "حدث خطأ أثناء إضافة كود الخصم",
   "egp": "جنيه",
-
   "ordersTitle": "الطلبات",
   "totalOrdersCard": "إجمالي الطلبات",
   "revenueCard": "الإيرادات",
@@ -404,7 +389,6 @@
   "paymentCOD": "الدفع عند الاستلام",
   "paymentCard": "بطاقة ائتمان",
   "paymentBank": "تحويل بنكي",
-
   "usersTitle": "المستخدمون",
   "searchUsers": "ابحث بالاسم أو البريد الإلكتروني...",
   "adminRole": "مدير",
@@ -414,7 +398,6 @@
   "confirmDeleteUser": "هل أنت متأكد من حذف هذا المستخدم؟",
   "userDeleted": "تم حذف المستخدم",
   "roleUpdated": "تم تحديث الدور",
-
   "messagesTitle": "رسائل التواصل",
   "unreadBadge": "جديد",
   "markAsRead": "تحديد كمقروء",
@@ -426,10 +409,8 @@
   "noMessages": "لا توجد رسائل بعد.",
   "unread": "غير مقروء",
   "read": "مقروء",
-
   "brandsCarouselDesc": "تصفح منتجاتنا عبر أفضل العلامات التجارية العالمية في مجال مضخات المياه",
   "allProducts": "كل المنتجات",
-
   "city": "المدينة",
   "checkout": "إتمام الطلب",
   "checkoutDesc": "أكمل تفاصيل طلبك أدناه",
@@ -460,7 +441,6 @@
   "addProductsBeforeCheckout": "أضف بعض المنتجات إلى سلتك قبل إتمام الطلب.",
   "continueShopping2": "متابعة التسوق",
   "itemsInCartCount": "منتج في سلتك",
-
   "editProfile": "تعديل الملف الشخصي",
   "backToAccount": "العودة لحسابي",
   "updateAccountInfo": "تحديث معلومات حسابك",
@@ -476,15 +456,14 @@
   "updating": "جاري التحديث...",
   "loadingProfile": "جاري تحميل الملف الشخصي...",
   "yourFullNamePlaceholder": "اسمك الكامل",
-
   "exploreCollections": "استعرض المنتجات",
   "buyNow": "اشتر الآن",
   "selectYourSize": "اختر مقاسك المفضل",
   "choosePreferredSize": "اختر مقاسك المفضل",
-
   "specsAndQuantity": "المواصفات الفنية والكمية",
   "quantityLabel": "الكمية:",
   "addToCartButton": "أضف للسلة",
   "noReviewsYet": "لا توجد تقييمات لهذا المنتج حتى الآن.",
-  "exploreModels": "استكشف الموديلات"
+  "exploreModels": "استكشف الموديلات",
+  "searchResults": "نتائج البحث"
 }

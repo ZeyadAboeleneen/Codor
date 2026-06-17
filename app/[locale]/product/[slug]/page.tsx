@@ -145,53 +145,89 @@ export default function ProductDetailsPage() {
           </div>
 
           {data.models && data.models.length > 0 ? (
-            <div className="overflow-x-auto rounded-xl border border-white/10">
-              <table className="w-full text-right text-white min-w-[800px]">
-                <thead className="bg-dark-500 text-gold-400 border-b border-white/10">
-                  <tr>
-                    <th className="px-6 py-4 font-semibold rounded-tr-xl">{t("modelName")}</th>
-                    <th className="px-6 py-4 font-semibold">{t("powerHP")}</th>
-                    <th className="px-6 py-4 font-semibold">{t("powerKW")}</th>
-                    <th className="px-6 py-4 font-semibold">{t("maxHead")}</th>
-                    <th className="px-6 py-4 font-semibold">{t("voltageLabel")}</th>
-                    <th className="px-6 py-4 font-semibold">{t("priceLabel")}</th>
-                    <th className="px-6 py-4 font-semibold rounded-tl-xl text-center">{t("actionLabel")}</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-dark-400 divide-y divide-white/5">
-                  {data.models.map((model: any) => (
-                    <tr key={model.id} className="hover:bg-white/5 transition-colors">
-                      <td className="px-6 py-4 font-bold">
-                        <div className="flex flex-col">
-                          <span>{model.name_en}</span>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">{model.hp || "-"}</td>
-                      <td className="px-6 py-4">{model.kw || "-"}</td>
-                      <td className="px-6 py-4">{model.max_head || "-"}</td>
-                      <td className="px-6 py-4">{model.voltage || "-"}</td>
-                      <td className="px-6 py-4 text-gold-400 font-bold text-lg">
-                        {formatPrice(model.price)}
-                      </td>
-                      <td className="px-6 py-4 text-center">
-                        <button
-                          onClick={() => handleAddToCart(model)}
-                          disabled={model.stock === 0}
-                          className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
-                            model.stock === 0
-                              ? "bg-dark-300 text-gray-500 cursor-not-allowed"
-                              : "bg-gold-500 text-dark-900 hover:bg-gold-400 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)]"
-                          }`}
-                        >
-                          <ShoppingCart className="w-4 h-4" />
-                          <span>{model.stock === 0 ? t("stockUnavailable") : t("addModel")}</span>
-                        </button>
-                      </td>
+            <>
+              {/* Mobile: card layout */}
+              <div className="flex flex-col gap-4 md:hidden">
+                {data.models.map((model: any) => (
+                  <div key={model.id} className="bg-dark-400 rounded-xl border border-white/10 p-4 text-white">
+                    <div className="text-gold-400 font-bold text-lg mb-3">{model.name_en}</div>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm mb-4">
+                      <div className="text-gray-400">{t("powerHP")}</div>
+                      <div className="font-medium">{model.hp || "-"}</div>
+                      <div className="text-gray-400">{t("powerKW")}</div>
+                      <div className="font-medium">{model.kw || "-"}</div>
+                      <div className="text-gray-400">{t("maxHead")}</div>
+                      <div className="font-medium">{model.max_head || "-"}</div>
+                      <div className="text-gray-400">{t("voltageLabel")}</div>
+                      <div className="font-medium">{model.voltage || "-"}</div>
+                      <div className="text-gray-400">{t("priceLabel")}</div>
+                      <div className="font-bold text-gold-400">{formatPrice(model.price)}</div>
+                    </div>
+                    <button
+                      onClick={() => handleAddToCart(model)}
+                      disabled={model.stock === 0}
+                      className={`w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                        model.stock === 0
+                          ? "bg-dark-300 text-gray-500 cursor-not-allowed"
+                          : "bg-gold-500 text-dark-900 hover:bg-gold-400 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)]"
+                      }`}
+                    >
+                      <ShoppingCart className="w-4 h-4" />
+                      <span>{model.stock === 0 ? t("stockUnavailable") : t("addModel")}</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              {/* Desktop: table layout */}
+              <div className="hidden md:block overflow-x-auto rounded-xl border border-white/10">
+                <table className="w-full text-right text-white min-w-[800px]">
+                  <thead className="bg-dark-500 text-gold-400 border-b border-white/10">
+                    <tr>
+                      <th className="px-6 py-4 font-semibold rounded-tr-xl">{t("modelName")}</th>
+                      <th className="px-6 py-4 font-semibold">{t("powerHP")}</th>
+                      <th className="px-6 py-4 font-semibold">{t("powerKW")}</th>
+                      <th className="px-6 py-4 font-semibold">{t("maxHead")}</th>
+                      <th className="px-6 py-4 font-semibold">{t("voltageLabel")}</th>
+                      <th className="px-6 py-4 font-semibold">{t("priceLabel")}</th>
+                      <th className="px-6 py-4 font-semibold rounded-tl-xl text-center">{t("actionLabel")}</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody className="bg-dark-400 divide-y divide-white/5">
+                    {data.models.map((model: any) => (
+                      <tr key={model.id} className="hover:bg-white/5 transition-colors">
+                        <td className="px-6 py-4 font-bold">
+                          <div className="flex flex-col">
+                            <span>{model.name_en}</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">{model.hp || "-"}</td>
+                        <td className="px-6 py-4">{model.kw || "-"}</td>
+                        <td className="px-6 py-4">{model.max_head || "-"}</td>
+                        <td className="px-6 py-4">{model.voltage || "-"}</td>
+                        <td className="px-6 py-4 text-gold-400 font-bold text-lg">
+                          {formatPrice(model.price)}
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          <button
+                            onClick={() => handleAddToCart(model)}
+                            disabled={model.stock === 0}
+                            className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                              model.stock === 0
+                                ? "bg-dark-300 text-gray-500 cursor-not-allowed"
+                                : "bg-gold-500 text-dark-900 hover:bg-gold-400 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)]"
+                            }`}
+                          >
+                            <ShoppingCart className="w-4 h-4" />
+                            <span>{model.stock === 0 ? t("stockUnavailable") : t("addModel")}</span>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           ) : (
             <div className="bg-dark-500 rounded-xl p-12 text-center border border-white/5">
               <Info className="w-12 h-12 text-gray-500 mx-auto mb-4" />

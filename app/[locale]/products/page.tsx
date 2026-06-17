@@ -11,6 +11,7 @@ export default function ProductsPage() {
   const t = useTranslations()
   const searchParams = useSearchParams()
   const brandId = searchParams.get("brand")
+  const search = searchParams.get("search")
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -19,7 +20,8 @@ export default function ProductsPage() {
       try {
         let url = "/api/products?limit=50"
         if (brandId) url += `&brand=${brandId}`
-        
+        if (search) url += `&search=${encodeURIComponent(search)}`
+
         const res = await fetch(url)
         if (res.ok) {
           const data = await res.json()
@@ -32,7 +34,7 @@ export default function ProductsPage() {
       }
     }
     fetchProducts()
-  }, [brandId])
+  }, [brandId, search])
 
   return (
     <div className="min-h-screen bg-dark-600 flex flex-col">
@@ -64,10 +66,10 @@ export default function ProductsPage() {
             </div>
           </section>
         ) : (
-          <FeaturedProducts 
-            products={products} 
-            title={t("products")} 
-            showViewAll={false} 
+          <FeaturedProducts
+            products={products}
+            title={search ? `${t("searchResults")}: "${search}"` : t("products")}
+            showViewAll={false}
           />
         )}
       </main>

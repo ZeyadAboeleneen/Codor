@@ -96,7 +96,7 @@ export function CondorNavigation() {
                 alt="Condor Egypt"
                 width={200}
                 height={60}
-                className="h-8 md:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
+                className="h-12 md:h-16 w-auto transition-transform duration-300 group-hover:scale-105"
                 priority
               />
             </Link>
@@ -126,7 +126,7 @@ export function CondorNavigation() {
             </div>
 
             {/* ─── Left Side: Icons (RTL) ─── */}
-            <div className="flex items-center gap-2 md:gap-3">
+            <div className="flex items-center gap-1 md:gap-3">
               <div className="hidden md:block">
                 <LanguageSwitcher />
               </div>
@@ -140,10 +140,10 @@ export function CondorNavigation() {
                 <Search className="h-5 w-5" />
               </button>
 
-              {/* Favorites */}
+              {/* Favorites — desktop only; on mobile it lives in the slide-out menu */}
               <Link
                 href="/favorites"
-                className="relative p-2 text-gray-300 hover:text-gold-400 transition-colors rounded-lg hover:bg-dark-600/5"
+                className="relative p-2 text-gray-300 hover:text-gold-400 transition-colors rounded-lg hover:bg-dark-600/5 hidden md:flex"
                 aria-label="Favorites"
               >
                 <Heart className="h-5 w-5" />
@@ -353,6 +353,23 @@ export function CondorNavigation() {
                     <ChevronLeft className="h-4 w-4 text-gray-400" />
                   </Link>
                 ))}
+                {/* Favorites link in mobile menu */}
+                <Link
+                  href="/favorites"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-between px-6 py-4 text-gray-300 hover:text-gold-400 hover:bg-dark-600/5 transition-colors"
+                >
+                  <span className="text-base font-medium flex items-center gap-2">
+                    <Heart className="h-4 w-4" />
+                    {t("favorites")}
+                    {favoritesState.count > 0 && (
+                      <span className="h-5 w-5 bg-gold-500 text-dark-900 text-[10px] font-bold rounded-full flex items-center justify-center">
+                        {favoritesState.count}
+                      </span>
+                    )}
+                  </span>
+                  <ChevronLeft className="h-4 w-4 text-gray-400" />
+                </Link>
               </div>
 
               {/* User Section */}

@@ -84,7 +84,7 @@ export const CustomSizeForm = ({
   ]
 
   return (
-    <div className="space-y-5 overflow-x-hidden">
+    <div className="space-y-5">
       <div className="grid grid-cols-2 gap-3">
         <button
           type="button"
@@ -156,7 +156,7 @@ export const CustomSizeForm = ({
         </div>
       ) : (
         <div className="space-y-4">
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {sizes.map((size) => (
               <motion.button
                 key={size.size}
@@ -172,7 +172,10 @@ export const CustomSizeForm = ({
                 }`}
                 onClick={() => onSelectSize(size)}
               >
-                <div className="font-medium">{size.size}{size.stockCount !== undefined && size.stockCount === 0 ? ' (Out of Stock)' : ''}</div>
+                <div className="font-medium text-sm break-words">{size.size}</div>
+                {size.stockCount !== undefined && size.stockCount === 0 && (
+                  <div className="text-xs text-red-400 mt-0.5">Out of Stock</div>
+                )}
                 <div className="text-xs mt-1">{size.volume}</div>
                 <div className="text-sm font-light mt-2">
                   {size.originalPrice && size.discountedPrice && size.discountedPrice < size.originalPrice ? (
@@ -192,60 +195,64 @@ export const CustomSizeForm = ({
           <div className="rounded-2xl border border-dark-400 p-4 space-y-4">
             <p className="text-xs uppercase tracking-[0.3em] text-gray-400">Size chart</p>
 
-            <div>
+            <div className="overflow-x-auto -mx-1 px-1">
               <p className="text-[11px] font-medium text-gray-400 mb-1">In inches</p>
-              <div className="grid grid-cols-6 text-xs font-medium text-gray-400 border-b border-dark-400 pb-2">
-                <span className="text-left">Measure</span>
-                {sizeChart.map((row) => (
-                  <span key={row.label} className="text-center">{row.label}</span>
-                ))}
-              </div>
-              {inchFields.map((field) => (
-                <div
-                  key={field.id}
-                  className="grid grid-cols-6 text-xs text-gray-300 py-1 border-b border-gray-50 last:border-none"
-                >
-                  <span className="text-left uppercase text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.2em] text-gray-400 whitespace-normal leading-tight">
-                    {field.label}
-                  </span>
+              <div className="min-w-[280px]">
+                <div className="grid grid-cols-6 text-xs font-medium text-gray-400 border-b border-dark-400 pb-2">
+                  <span className="text-left">Measure</span>
                   {sizeChart.map((row) => (
-                    <span
-                      key={`${row.label}-${field.id}`}
-                      className="text-center"
-                    >
-                      {row[field.id]}
-                    </span>
+                    <span key={row.label} className="text-center">{row.label}</span>
                   ))}
                 </div>
-              ))}
+                {inchFields.map((field) => (
+                  <div
+                    key={field.id}
+                    className="grid grid-cols-6 text-xs text-gray-300 py-1 border-b border-gray-50 last:border-none"
+                  >
+                    <span className="text-left uppercase text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.2em] text-gray-400 whitespace-normal leading-tight">
+                      {field.label}
+                    </span>
+                    {sizeChart.map((row) => (
+                      <span
+                        key={`${row.label}-${field.id}`}
+                        className="text-center"
+                      >
+                        {row[field.id]}
+                      </span>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="pt-3 border-t border-dark-400">
+            <div className="pt-3 border-t border-dark-400 overflow-x-auto -mx-1 px-1">
               <p className="text-[11px] font-medium text-gray-400 mb-1">In cm</p>
-              <div className="grid grid-cols-6 text-xs font-medium text-gray-400 border-b border-dark-400 pb-2">
-                <span className="text-left">Measure</span>
-                {sizeChart.map((row) => (
-                  <span key={row.label} className="text-center">{row.label}</span>
-                ))}
-              </div>
-              {cmFields.map((field) => (
-                <div
-                  key={field.id}
-                  className="grid grid-cols-6 text-xs text-gray-300 py-1 border-b border-gray-50 last:border-none"
-                >
-                  <span className="text-left uppercase text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.2em] text-gray-400 whitespace-normal leading-tight">
-                    {field.label}
-                  </span>
+              <div className="min-w-[280px]">
+                <div className="grid grid-cols-6 text-xs font-medium text-gray-400 border-b border-dark-400 pb-2">
+                  <span className="text-left">Measure</span>
                   {sizeChart.map((row) => (
-                    <span
-                      key={`${row.label}-${field.id}`}
-                      className="text-center"
-                    >
-                      {row[field.id]}
-                    </span>
+                    <span key={row.label} className="text-center">{row.label}</span>
                   ))}
                 </div>
-              ))}
+                {cmFields.map((field) => (
+                  <div
+                    key={field.id}
+                    className="grid grid-cols-6 text-xs text-gray-300 py-1 border-b border-gray-50 last:border-none"
+                  >
+                    <span className="text-left uppercase text-[10px] sm:text-xs tracking-[0.08em] sm:tracking-[0.2em] text-gray-400 whitespace-normal leading-tight">
+                      {field.label}
+                    </span>
+                    {sizeChart.map((row) => (
+                      <span
+                        key={`${row.label}-${field.id}`}
+                        className="text-center"
+                      >
+                        {row[field.id]}
+                      </span>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="mt-3 space-y-2">
