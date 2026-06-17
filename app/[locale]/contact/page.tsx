@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { ArrowLeft, Mail, Phone, MapPin, Send, Instagram, Facebook } from "lucide-react"
+import { ArrowLeft, Mail, Phone, MapPin, Send, Instagram, Facebook, MessageSquare } from "lucide-react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { useTranslations, useLocale } from "next-intl"
@@ -224,61 +224,59 @@ export default function ContactPage() {
               </div>
 
               <div className="space-y-6">
-                <div className={`flex items-start ${locale === "ar" ? "flex-row-reverse space-x-reverse" : "space-x-4"}`}>
-                  <div className="w-12 h-12 bg-dark-400 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Mail className="h-6 w-6 text-gray-400" />
+                <div className={`flex items-center ${locale === "ar" ? "flex-row-reverse space-x-reverse" : "space-x-4"}`}>
+                  <div className="w-12 h-12 rounded-xl bg-gold-500/10 flex items-center justify-center text-gold-400 shrink-0">
+                    <Mail className="w-6 h-6" />
                   </div>
-                  <div>
-                    <h3 className="font-medium mb-1">{t("email")}</h3>
-                    <p className="text-gray-400">info@condoregypt.com</p>
+                  <div className={locale === "ar" ? "text-right" : "text-left"}>
+                    <h3 className="font-bold text-white mb-1">{t("email")}</h3>
+                    <p className="text-gray-400 text-sm dir-ltr">condor.egyy@gmail.com</p>
+                  </div>
+                </div>
+
+                <div className={`flex items-center ${locale === "ar" ? "flex-row-reverse space-x-reverse" : "space-x-4"}`}>
+                  <div className="w-12 h-12 rounded-xl bg-gold-500/10 flex items-center justify-center text-gold-400 shrink-0">
+                    <Phone className="w-6 h-6" />
+                  </div>
+                  <div className={locale === "ar" ? "text-right" : "text-left"}>
+                    <h3 className="font-bold text-white mb-1">{t("phoneNumber")}</h3>
+                    <p className="text-gray-400 text-sm dir-ltr">WhatsApp: +20 10 28126522</p>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-8">
-                <h3 className="font-medium font-serif tracking-wide mb-4">{t("followUs")}</h3>
-                <p className="text-gray-400 mb-2">
-                  {t("followUsDesc")}
-                </p>
-                <p className="text-gray-400 mb-4">WhatsApp: +971 50 299 6885</p>
-                <div className="flex flex-wrap gap-3">
-                  <Link
-                    href="https://www.instagram.com/alanodalqadi?igsh=MWVxaXBvaXhjNm50ZQ=="
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group"
-                  >
-                    <div className="w-10 h-10 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg">
-                      <Instagram className="h-5 w-5 text-white" />
-                    </div>
-                  </Link>
-                  <Link
-                    href="https://www.facebook.com/condoregypt"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group"
-                  >
-                    <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg">
-                      <Facebook className="h-5 w-5 text-white" />
-                    </div>
-                  </Link>
+              <div className="pt-8 border-t border-white/5">
+                <h3 className={`font-bold text-white mb-4 ${locale === "ar" ? "text-right" : "text-left"}`}>{t("followUs")}</h3>
+                <div className={`flex items-center gap-3 ${locale === "ar" ? "justify-start flex-row-reverse" : "justify-start"}`}>
                   <a
-                    href="mailto:info@condoregypt.com"
-                    className="group"
+                    href="https://www.instagram.com/condor.egy?igsh=MTc2cHcydWc3OTB0&utm_source=qr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-gold-400 hover:bg-gold-500/10 transition-colors"
                   >
-                    <div className="w-10 h-10 bg-dark-400 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg">
-                      <Mail className="h-5 w-5 text-gray-300" />
-                    </div>
+                    <Instagram className="w-5 h-5" />
                   </a>
                   <a
-                    href="https://wa.me/971502996885"
+                    href="https://www.facebook.com/share/1BFNEcNQXS/?mibextid=wwXIfr"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group"
+                    className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-gold-400 hover:bg-gold-500/10 transition-colors"
                   >
-                    <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg">
-                      <Phone className="h-5 w-5 text-white" />
-                    </div>
+                    <Facebook className="w-5 h-5" />
+                  </a>
+                  <a
+                    href="mailto:condor.egyy@gmail.com"
+                    className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-gold-400 hover:bg-gold-500/10 transition-colors"
+                  >
+                    <Mail className="w-5 h-5" />
+                  </a>
+                  <a
+                    href="https://wa.me/201028126522"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-gold-400 hover:bg-gold-500/10 transition-colors"
+                  >
+                    <MessageSquare className="w-5 h-5" />
                   </a>
                 </div>
               </div>

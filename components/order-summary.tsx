@@ -75,7 +75,7 @@ export const OrderSummary = ({
   return (
     <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden">
       <motion.div 
-        className="absolute -inset-4 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-lg -z-10"
+        className="absolute -inset-4 bg-gradient-to-r from-gold-500/10 to-gold-600/10 rounded-lg -z-10"
         animate={{
           rotate: [0, 1, 0, -1, 0],
         }}
@@ -86,7 +86,7 @@ export const OrderSummary = ({
         }}
       />
       <motion.div 
-        className="absolute -inset-2 bg-gradient-to-r from-purple-300/30 to-pink-300/30 rounded-lg -z-10"
+        className="absolute -inset-2 bg-gradient-to-r from-gold-500/15 to-gold-600/15 rounded-lg -z-10"
         animate={{
           rotate: [0, -0.5, 0, 0.5, 0],
         }}
@@ -98,7 +98,7 @@ export const OrderSummary = ({
       />
       <CardHeader className="pb-4">
         <CardTitle className="text-lg sm:text-xl flex items-center">
-          <Package className="mr-2 h-5 w-5 text-purple-600" />
+          <Package className="mr-2 h-5 w-5 text-gold-500" />
           Order Summary
         </CardTitle>
       </CardHeader>
@@ -112,15 +112,15 @@ export const OrderSummary = ({
               e.stopPropagation()
               setIsExpanded(!isExpanded)
             }}
-            className="flex items-center justify-between w-full p-3 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg hover:from-purple-100 hover:to-pink-100 transition-all duration-300"
+            className="flex items-center justify-between w-full p-3 bg-dark-500 border border-white/10 rounded-lg hover:bg-dark-500/80 transition-all duration-300"
           >
-            <span className="text-sm font-medium text-purple-800">
+            <span className="text-sm font-medium text-gold-500">
               {items.length} item{items.length !== 1 ? 's' : ''} in cart
             </span>
             {isExpanded ? (
-              <ChevronUp className="h-4 w-4 text-purple-600" />
+              <ChevronUp className="h-4 w-4 text-gold-500" />
             ) : (
-              <ChevronDown className="h-4 w-4 text-purple-600" />
+              <ChevronDown className="h-4 w-4 text-gold-500" />
             )}
           </button>
           
@@ -133,7 +133,7 @@ export const OrderSummary = ({
               className="mt-3 space-y-3 max-h-64 overflow-y-auto"
             >
               {items.map((item) => (
-                <div key={item.id} className="flex items-center space-x-3 p-2 bg-dark-600 rounded border border-purple-100 hover:border-purple-300 transition-colors">
+                <div key={item.id} className="flex items-center space-x-3 p-2 bg-dark-500 rounded border border-white/5 hover:border-gold-500/30 transition-colors">
                   <div className="relative w-10 h-10 flex-shrink-0">
                     <Image
                       src={item.image || "/placeholder.svg"}
@@ -189,7 +189,7 @@ export const OrderSummary = ({
         {/* Desktop Items */}
         <div className="hidden sm:block space-y-3 max-h-64 overflow-y-auto">
           {items.map((item) => (
-            <div key={item.id} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-purple-50 transition-colors">
+            <div key={item.id} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gold-500/5 transition-colors">
               <div className="relative w-12 h-12 flex-shrink-0">
                 <Image
                   src={item.image || "/placeholder.svg"}
@@ -263,11 +263,11 @@ export const OrderSummary = ({
           ))}
         </div>
 
-        <Separator className="bg-gradient-to-r from-purple-200 to-pink-200" />
+        <Separator className="bg-white/10" />
 
         {/* Discount Code */}
         <div className="space-y-3">
-          <Label className="text-sm font-medium text-purple-800">Discount Code</Label>
+          <Label className="text-sm font-medium text-white">Discount Code</Label>
           {!appliedDiscount ? (
             <div className="flex space-x-2">
               <Input
@@ -276,7 +276,7 @@ export const OrderSummary = ({
                   setDiscountCode(e.target.value.toUpperCase())
                 }}
                 placeholder="Enter discount code"
-                className="flex-1 text-sm border-dark-400 focus:border-purple-500 focus:ring-purple-500"
+                className="flex-1 text-sm border-dark-400 focus:border-gold-500 focus:ring-gold-500"
               />
               <Button
                 type="button"
@@ -284,13 +284,13 @@ export const OrderSummary = ({
                 disabled={discountLoading || !discountCode.trim()}
                 variant="outline"
                 size="sm"
-                className="whitespace-nowrap border-purple-300 text-purple-700 hover:bg-purple-50 hover:border-purple-500"
+                className="whitespace-nowrap border-gold-500/30 text-gold-400 hover:bg-gold-500/10 hover:border-gold-500"
               >
                 {discountLoading ? (
                   <motion.div 
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    className="h-4 w-4 border-t-2 border-b-2 border-purple-500 rounded-full"
+                    className="h-4 w-4 border-t-2 border-b-2 border-gold-500 rounded-full"
                   />
                 ) : (
                   "Apply"
@@ -329,7 +329,7 @@ export const OrderSummary = ({
           )}
         </div>
 
-        <Separator className="bg-gradient-to-r from-purple-200 to-pink-200" />
+        <Separator className="bg-white/10" />
 
         {/* Pricing */}
         <div className="space-y-2 text-sm">
@@ -353,7 +353,7 @@ export const OrderSummary = ({
           )}
         </div>
 
-        <Separator className="bg-gradient-to-r from-purple-200 to-pink-200" />
+        <Separator className="bg-white/10" />
 
         <div className="flex justify-between text-lg font-medium">
           <span>Total</span>
@@ -398,7 +398,7 @@ export const OrderSummary = ({
             )}
           </span>
           <motion.span 
-            className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100"
+            className="absolute inset-0 bg-gold-gradient opacity-0 group-hover:opacity-100"
             initial={{ x: "-100%" }}
             whileHover={{ x: 0 }}
             transition={{ duration: 0.4 }}

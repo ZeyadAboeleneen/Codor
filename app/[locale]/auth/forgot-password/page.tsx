@@ -41,9 +41,9 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-dark-400 px-4">
-      <div className="max-w-md w-full bg-dark-600 p-8 rounded shadow">
-        <h1 className="text-2xl font-bold mb-4 text-center">{t("forgotPasswordTitle")}</h1>
+    <div className="min-h-screen flex items-center justify-center bg-dark-500 px-4">
+      <div className="max-w-md w-full bg-dark-400 border border-white/10 p-8 rounded-2xl shadow-xl">
+        <h1 className="text-2xl font-bold mb-4 text-center text-white">{t("forgotPasswordTitle")}</h1>
         <p className="text-sm text-gray-400 mb-6 text-center">
           {t("forgotPasswordDesc")}
         </p>
@@ -51,7 +51,7 @@ export default function ForgotPasswordPage() {
           <input
             type="email"
             placeholder={t("yourEmail")}
-            className="w-full px-4 py-2 border border-dark-300 rounded"
+            className="w-full px-4 py-2 border border-white/10 bg-dark-500 text-white rounded-lg focus:border-gold-500 focus:ring-1 focus:ring-gold-500 focus:outline-none transition-colors"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -59,17 +59,17 @@ export default function ForgotPasswordPage() {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full bg-black text-white py-2 rounded hover:bg-dark-700 transition ${locale === "ar" ? "flex-row-reverse" : ""}`}
+            className={`w-full bg-gold-500 text-dark-900 py-2.5 rounded-lg hover:bg-gold-400 font-semibold transition ${locale === "ar" ? "flex-row-reverse" : ""}`}
           >
             {loading ? t("sending") : t("sendResetLink")}
           </button>
         </form>
 
-        {message && <p className="text-green-600 text-sm mt-4">{message}</p>}
-        {error && <p className="text-red-600 text-sm mt-4">{error}</p>}
+        {message && <p className="text-green-400 text-sm mt-4">{message}</p>}
+        {error && <p className="text-red-400 text-sm mt-4">{error}</p>}
 
         <div className="text-center mt-6">
-          <Link href="/auth/login" className={`inline-flex items-center text-gray-400 hover:text-white mb-6 transition-colors ${locale === "ar" ? "flex-row-reverse" : ""}`}>
+          <Link href="/auth/login" className={`inline-flex items-center text-gray-400 hover:text-gold-400 mb-6 transition-colors ${locale === "ar" ? "flex-row-reverse" : ""}`}>
                         <ArrowLeft className={`h-4 w-4 ${locale === "ar" ? "ml-2 rotate-180" : "mr-2"}`} />
                         {t("backToLoginPage")}
                       </Link>

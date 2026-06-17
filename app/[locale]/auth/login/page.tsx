@@ -104,16 +104,16 @@ export default function LoginPage() {
               {t("backToHome")}
             </Link>
 
-            <Card>
+            <Card className="bg-dark-400 border border-white/10 shadow-xl">
               <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-light tracking-wider">{t("welcomeBack")}</CardTitle>
+                <CardTitle className="text-2xl font-light tracking-wider text-white">{t("welcomeBack")}</CardTitle>
                 <p className="text-gray-400">{t("signInToAccount")}</p>
               </CardHeader>
               <CardContent>
                 {error && (
                   <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
-                    <Alert className="border-red-200 bg-red-50">
-                      <AlertDescription className="text-red-600">{error}</AlertDescription>
+                    <Alert className="border-red-500/30 bg-red-500/10">
+                      <AlertDescription className="text-red-400">{error}</AlertDescription>
                     </Alert>
                   </motion.div>
                 )}
@@ -164,7 +164,7 @@ export default function LoginPage() {
 
                   <Button
                     type="submit"
-                    className={`w-full bg-black text-white hover:bg-dark-700 ${locale === "ar" ? "flex-row-reverse" : ""}`}
+                    className={`w-full bg-gold-500 text-dark-900 hover:bg-gold-400 font-semibold ${locale === "ar" ? "flex-row-reverse" : ""}`}
                     size="lg"
                     disabled={loading}
                   >
@@ -175,7 +175,7 @@ export default function LoginPage() {
                 <div className="mt-6 text-center">
                   <p className="text-gray-400">
                     {t("dontHaveAccount")}{" "}
-                    <Link href="/auth/register" className="text-white hover:underline font-medium">
+                    <Link href="/auth/register" className="text-gold-500 hover:text-gold-400 hover:underline font-medium">
                       {t("signUp")}
                     </Link>
                   </p>

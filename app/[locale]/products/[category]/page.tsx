@@ -294,7 +294,7 @@ export default function CategoryPage() {
     const computedPrice = baseSize.discountedPrice || baseSize.originalPrice || selectedProduct.packagePrice || 0
 
     openWhatsAppOrder({
-      phoneNumber: "+971502996885",
+      phoneNumber: "+201028126522",
       product: {
         id: selectedProduct.id,
         name: selectedProduct.name,
@@ -521,8 +521,8 @@ export default function CategoryPage() {
                     <MessageCircle className="h-5 w-5 mr-3 text-green-500" />
                     <div>
                       {t("customSizeAssistance")}
-                      <a href="https://wa.me/971502996885" target="_blank" rel="noopener noreferrer" className="font-medium text-green-600 hover:underline ml-1">
-                        +971 50 299 6885
+                      <a href="https://wa.me/201028126522" target="_blank" rel="noopener noreferrer" className="font-medium text-green-600 hover:underline ml-1">
+                        +20 10 2812 6522
                       </a>
                     </div>
                   </div>

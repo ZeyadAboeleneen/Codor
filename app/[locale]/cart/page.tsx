@@ -50,16 +50,16 @@ export default function CartPage() {
                 className="mb-8"
               >
                 <div className="relative mx-auto mb-6 flex justify-center">
-                  <div className="w-20 h-20 bg-gradient-to-r from-pink-50 to-purple-50 rounded-full flex items-center justify-center">
-                    <ShoppingBag className="h-10 w-10 text-purple-400" />
+                  <div className="w-20 h-20 bg-gold-500/10 border border-gold-500/20 rounded-full flex items-center justify-center">
+                    <ShoppingBag className="h-10 w-10 text-gold-500" />
                   </div>
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-light tracking-wider mb-4 text-purple-700">{t("yourCartIsEmpty")}</h1>
+                <h1 className="text-2xl sm:text-3xl font-light tracking-wider mb-4 text-gold-500">{t("yourCartIsEmpty")}</h1>
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: "100px" }}
                   transition={{ duration: 0.8, delay: 0.3 }}
-                  className="h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto my-6 rounded-full"
+                  className="h-1 bg-gold-gradient mx-auto my-6 rounded-full"
                 />
                 <p className="text-gray-400 mb-8 text-sm sm:text-base">{t("cartEmptyDesc")}</p>
               </motion.div>
@@ -72,7 +72,7 @@ export default function CartPage() {
                   <Button className={`bg-black text-white hover:bg-dark-700 rounded-full px-8 py-6 relative overflow-hidden group ${settings.language === "ar" ? "flex-row-reverse" : ""}`}>
                     <span className="relative z-10">{t("continueShopping")}</span>
                     <motion.span 
-                      className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100"
+                      className="absolute inset-0 bg-gold-gradient opacity-0 group-hover:opacity-100"
                       initial={{ x: "-100%" }}
                       whileHover={{ x: 0 }}
                       transition={{ duration: 0.4 }}
@@ -114,7 +114,7 @@ export default function CartPage() {
               initial={{ width: 0 }}
               animate={{ width: "100px" }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 rounded-full"
+              className="h-1 bg-gold-gradient mb-4 rounded-full"
             />
             <p className="text-gray-400 text-sm sm:text-base">
               {state.items.length} {t("itemsInCartCount")}
@@ -129,8 +129,8 @@ export default function CartPage() {
               transition={{ duration: 0.5 }}
               className="mb-6"
             >
-              <Alert className="border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50">
-                <UserPlus className="h-5 w-5 text-purple-600" />
+              <Alert className="border-white/10 bg-dark-400">
+                <UserPlus className="h-5 w-5 text-gold-500" />
                 <AlertDescription className="text-gray-300">
                   <div className={`flex items-center justify-between flex-wrap gap-3 ${settings.language === "ar" ? "flex-row-reverse" : ""}`}>
                     <span className="text-sm sm:text-base">
@@ -138,7 +138,7 @@ export default function CartPage() {
                     </span>
                     <Link href="/auth/register?redirect=/cart">
                       <Button 
-                        className="bg-purple-600 hover:bg-purple-700 text-white rounded-full px-6 py-2 text-sm sm:text-base"
+                        className="bg-gold-500 hover:bg-gold-600 text-dark-900 font-semibold rounded-full px-6 py-2 text-sm sm:text-base"
                         size="sm"
                       >
                         {t("signUp")}
@@ -175,7 +175,7 @@ export default function CartPage() {
               <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
                 <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 sticky top-24 relative overflow-hidden">
                   <motion.div 
-                    className="absolute -inset-4 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-lg -z-10"
+                    className="absolute -inset-4 bg-gradient-to-r from-gold-500/10 to-gold-600/10 rounded-lg -z-10"
                     animate={{
                       rotate: [0, 1, 0, -1, 0],
                     }}
@@ -186,7 +186,7 @@ export default function CartPage() {
                     }}
                   />
                   <motion.div 
-                    className="absolute -inset-2 bg-gradient-to-r from-purple-300/30 to-pink-300/30 rounded-lg -z-10"
+                    className="absolute -inset-2 bg-gradient-to-r from-gold-500/15 to-gold-600/15 rounded-lg -z-10"
                     animate={{
                       rotate: [0, -0.5, 0, 0.5, 0],
                     }}
@@ -198,7 +198,7 @@ export default function CartPage() {
                   />
                   <CardHeader className="pb-4">
                     <CardTitle className={`text-lg sm:text-xl font-light flex items-center ${settings.language === "ar" ? "flex-row-reverse" : ""}`}>
-                      <Package className={`h-5 w-5 text-purple-600 ${settings.language === "ar" ? "ml-2" : "mr-2"}`} />
+                      <Package className={`h-5 w-5 text-gold-500 ${settings.language === "ar" ? "ml-2" : "mr-2"}`} />
                       {t("orderSummary") || "Order Summary"}
                     </CardTitle>
                   </CardHeader>
@@ -209,23 +209,23 @@ export default function CartPage() {
                       <span>{formatPrice(subtotal)}</span>
                     </div>
 
-                    <Separator className="bg-gradient-to-r from-purple-200 to-pink-200" />
+                    <Separator className="bg-white/10" />
 
-                    <Separator className="bg-gradient-to-r from-purple-200 to-pink-200" />
+                    <Separator className="bg-white/10" />
 
                     <div className="flex justify-between text-lg font-medium">
                       <span>{t("total")}</span>
                       <span>{formatPrice(total)}</span>
                     </div>
 
-                    <Separator className="bg-gradient-to-r from-purple-200 to-pink-200" />
+                    <Separator className="bg-white/10" />
 
                     {!authState.isAuthenticated && (
-                      <Alert className="bg-purple-50 border-purple-200">
+                      <Alert className="bg-dark-400 border-white/10">
                         <AlertDescription className="text-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                           <span>{t("signUpToTrack")}</span>
                           <Link href="/auth/register?redirect=/cart">
-                            <Button variant="outline" size="sm" className="rounded-full">
+                            <Button variant="outline" size="sm" className="rounded-full border-white/10 text-gray-300 hover:text-gold-400 hover:border-gold-500/30">
                               {t("signUp")}
                             </Button>
                           </Link>
@@ -234,10 +234,10 @@ export default function CartPage() {
                     )}
 
                     <Link href="/checkout">
-                      <Button className={`w-full bg-black text-white hover:bg-dark-700 text-base py-3 rounded-full relative overflow-hidden group ${settings.language === "ar" ? "flex-row-reverse" : ""}`} size="lg">
+                      <Button className={`w-full bg-gold-500 text-dark-900 hover:bg-gold-400 font-semibold text-base py-3 rounded-full relative overflow-hidden group ${settings.language === "ar" ? "flex-row-reverse" : ""}`} size="lg">
                         <span className="relative z-10">{t("proceedToCheckout")}</span>
                         <motion.span 
-                          className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100"
+                          className="absolute inset-0 bg-gold-gradient opacity-0 group-hover:opacity-100"
                           initial={{ x: "-100%" }}
                           whileHover={{ x: 0 }}
                           transition={{ duration: 0.4 }}
@@ -264,7 +264,7 @@ export default function CartPage() {
         transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
         className="fixed bottom-8 left-8 z-10"
       >
-        <Sparkles className="h-6 w-6 text-purple-400" />
+        <Sparkles className="h-6 w-6 text-gold-500/50" />
       </motion.div>
       
       <motion.div
@@ -272,7 +272,7 @@ export default function CartPage() {
         transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
         className="fixed top-1/4 right-8 z-10"
       >
-        <Sparkles className="h-4 w-4 text-pink-400" />
+        <Sparkles className="h-4 w-4 text-gold-500/30" />
       </motion.div>
     </div>
   )

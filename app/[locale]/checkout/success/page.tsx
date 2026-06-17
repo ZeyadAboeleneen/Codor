@@ -45,15 +45,15 @@ export default function CheckoutSuccessPage() {
               <p className="text-gray-400 text-lg mb-4">
                 Thank you for your purchase. Your order has been successfully placed.
               </p>
-              <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 max-w-2xl mx-auto">
+              <div className="bg-dark-500 border border-white/10 border-l-4 border-l-gold-500 p-4 mb-6 max-w-2xl mx-auto text-left rounded-r-lg">
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <svg className="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <svg className="h-5 w-5 text-gold-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm text-blue-700">
+                    <p className="text-sm text-gray-300">
                       Your order is expected to arrive within 15 to 20 days. Please note that custom designs outside our collection may require additional time, depending on the style and level of detail.
                     </p>
                   </div>
@@ -94,18 +94,18 @@ export default function CheckoutSuccessPage() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="grid md:grid-cols-3 gap-6 mb-8"
             >
-              <Card className="border-0 shadow-sm">
+              <Card className="border-0 shadow-sm bg-dark-400 border-white/5">
                 <CardContent className="p-6 text-center">
-                  <Mail className="h-8 w-8 mx-auto mb-3 text-blue-500" />
-                  <h3 className="font-medium mb-2">Confirmation Email</h3>
+                  <Mail className="h-8 w-8 mx-auto mb-3 text-gold-500" />
+                  <h3 className="font-medium mb-2 text-white">Confirmation Email</h3>
                   <p className="text-sm text-gray-400">We've sent you an email with your order details</p>
                 </CardContent>
               </Card>
 
-              <Card className="border-0 shadow-sm">
+              <Card className="border-0 shadow-sm bg-dark-400 border-white/5">
                 <CardContent className="p-6 text-center">
-                  <Package className="h-8 w-8 mx-auto mb-3 text-orange-500" />
-                  <h3 className="font-medium mb-2">Processing</h3>
+                  <Package className="h-8 w-8 mx-auto mb-3 text-gold-500" />
+                  <h3 className="font-medium mb-2 text-white">Processing</h3>
                   <p className="text-sm text-gray-400">Your order is being prepared for shipment</p>
                 </CardContent>
               </Card>
@@ -122,13 +122,13 @@ export default function CheckoutSuccessPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
                   variant="outline"
-                  className="border-black text-white hover:bg-black hover:text-white bg-transparent"
+                  className="border-white/10 text-gray-300 hover:text-gold-400 hover:border-gold-500/30 hover:bg-gold-500/10 bg-transparent"
                   onClick={() => router.push("/account")}
                 >
                   Track Your Order
                 </Button>
                 <Button 
-                  className="bg-black text-white hover:bg-dark-700"
+                  className="bg-gold-500 text-dark-900 hover:bg-gold-400 font-semibold"
                   onClick={() => router.push("/products")}
                 >
                   Continue Shopping
@@ -145,31 +145,31 @@ export default function CheckoutSuccessPage() {
                 </p>
                 <div className="flex justify-center space-x-4">
                   <a
-                    href="mailto:alanodalqadi@gmail.com"
+                    href="mailto:condor.egyy@gmail.com"
                     className="group"
                   >
-                    <div className="w-8 h-8 bg-dark-300 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg">
-                      <Mail className="h-4 w-4 text-gray-300" />
+                    <div className="w-8 h-8 bg-dark-300 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg border border-white/5 hover:bg-gold-500/10 hover:border-gold-500/30">
+                      <Mail className="h-4 w-4 text-gray-300 group-hover:text-gold-400 transition-colors" />
                     </div>
                   </a>
                   <a
-                    href="https://wa.me/971502996885"
+                    href="https://wa.me/201028126522"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group"
                   >
-                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg">
-                      <Phone className="h-4 w-4 text-white" />
+                    <div className="w-8 h-8 bg-dark-300 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg border border-white/5 hover:bg-gold-500/10 hover:border-gold-500/30">
+                      <Phone className="h-4 w-4 text-gray-300 group-hover:text-gold-400 transition-colors" />
                     </div>
                   </a>
                   <a
-                    href="https://www.instagram.com/alanodalqadi?igsh=MWVxaXBvaXhjNm50ZQ=="
+                    href="https://www.instagram.com/condor.egy?igsh=MTc2cHcydWc3OTB0&utm_source=qr"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group"
                   >
-                    <div className="w-8 h-8 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg">
-                      <Instagram className="h-4 w-4 text-white" />
+                    <div className="w-8 h-8 bg-dark-300 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg border border-white/5 hover:bg-gold-500/10 hover:border-gold-500/30">
+                      <Instagram className="h-4 w-4 text-gray-300 group-hover:text-gold-400 transition-colors" />
                     </div>
                   </a>
                   <a
@@ -178,8 +178,8 @@ export default function CheckoutSuccessPage() {
                     rel="noopener noreferrer"
                     className="group"
                   >
-                    <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg">
-                      <svg className="h-4 w-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <div className="w-8 h-8 bg-dark-300 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg border border-white/5 hover:bg-gold-500/10 hover:border-gold-500/30">
+                      <svg className="h-4 w-4 text-gray-300 group-hover:text-gold-400 transition-colors" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
                       </svg>
                     </div>

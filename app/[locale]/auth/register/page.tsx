@@ -100,15 +100,15 @@ export default function RegisterPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <Card className="shadow-lg border-0">
+              <Card className="shadow-lg border border-white/10 bg-dark-400">
                 <CardHeader>
                   <CardTitle className="text-center text-xl font-light">{t("signUp")}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     {error && (
-                      <Alert className="border-red-200 bg-red-50">
-                        <AlertDescription className="text-red-600">{error}</AlertDescription>
+                      <Alert className="border-red-500/30 bg-red-500/10">
+                        <AlertDescription className="text-red-400">{error}</AlertDescription>
                       </Alert>
                     )}
 
@@ -124,7 +124,7 @@ export default function RegisterPage() {
                         onChange={handleChange}
                         placeholder={t("yourFullName")}
                         required
-                        className="border-dark-300 focus:border-black"
+                        className="border-white/10 bg-dark-500 text-white focus:border-gold-500"
                       />
                     </div>
 
@@ -140,7 +140,7 @@ export default function RegisterPage() {
                         onChange={handleChange}
                         placeholder={t("yourEmail")}
                         required
-                        className="border-dark-300 focus:border-black"
+                        className="border-white/10 bg-dark-500 text-white focus:border-gold-500"
                       />
                     </div>
 
@@ -157,7 +157,7 @@ export default function RegisterPage() {
                           onChange={handleChange}
                           placeholder={t("createPassword")}
                           required
-                          className={`border-dark-300 focus:border-black ${locale === "ar" ? "pl-10" : "pr-10"}`}
+                          className={`border-white/10 bg-dark-500 text-white focus:border-gold-500 ${locale === "ar" ? "pl-10" : "pr-10"}`}
                         />
                         <button
                           type="button"
@@ -181,14 +181,14 @@ export default function RegisterPage() {
                         onChange={handleChange}
                         placeholder={t("confirmPasswordPlaceholder")}
                         required
-                        className="border-dark-300 focus:border-black"
+                        className="border-white/10 bg-dark-500 text-white focus:border-gold-500"
                       />
                     </div>
 
                     <Button
                       type="submit"
                       size="lg"
-                      className={`w-full bg-black text-white hover:bg-dark-700 ${locale === "ar" ? "flex-row-reverse" : ""}`}
+                      className={`w-full bg-gold-500 text-dark-900 hover:bg-gold-400 font-semibold ${locale === "ar" ? "flex-row-reverse" : ""}`}
                       disabled={state.isLoading}
                     >
                       {state.isLoading ? t("creatingAccount") : t("signUp")}
@@ -198,7 +198,7 @@ export default function RegisterPage() {
                   <div className="mt-6 text-center">
                     <p className="text-sm text-gray-400">
                       {t("alreadyHaveAccount")}{" "}
-                      <Link href="/auth/login" className="text-white hover:underline font-medium">
+                      <Link href="/auth/login" className="text-gold-500 hover:text-gold-400 hover:underline font-medium">
                         {t("signIn")}
                       </Link>
                     </p>

@@ -299,7 +299,7 @@ export default function ProductDetailPage() {
       const price = firstSize?.discountedPrice || firstSize?.originalPrice || 0
 
       openWhatsAppOrder({
-        phoneNumber: "+971502996885",
+        phoneNumber: "+201028126522",
         product: {
           id: product.id,
           name: product.name,
@@ -342,7 +342,7 @@ export default function ProductDetailPage() {
       }
 
       openWhatsAppOrder({
-        phoneNumber: "+971502996885",
+        phoneNumber: "+201028126522",
         product: {
           id: product.id,
           name: product.name,
@@ -394,7 +394,7 @@ export default function ProductDetailPage() {
     }
 
     openWhatsAppOrder({
-      phoneNumber: "+971502996885",
+      phoneNumber: "+201028126522",
       product: {
         id: product.id,
         name: product.name,
@@ -1835,7 +1835,7 @@ export default function ProductDetailPage() {
                 const price = firstSize?.discountedPrice || firstSize?.originalPrice || 0
 
                 openWhatsAppOrder({
-                  phoneNumber: "+971502996885",
+                  phoneNumber: "+201028126522",
                   product: {
                     id: selectedProduct.id,
                     name: selectedProduct.name,

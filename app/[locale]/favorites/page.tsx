@@ -151,7 +151,7 @@ export default function FavoritesPage() {
     }
 
     openWhatsAppOrder({
-      phoneNumber: "+971502996885",
+      phoneNumber: "+201028126522",
       product: {
         id: item.id,
         name: item.name,
@@ -230,7 +230,7 @@ export default function FavoritesPage() {
     const computedPrice = baseSize.discountedPrice || baseSize.originalPrice || selectedProduct.packagePrice || 0
 
     openWhatsAppOrder({
-      phoneNumber: "+971502996885",
+      phoneNumber: "+201028126522",
       product: {
         id: selectedProduct.id,
         name: selectedProduct.name,
@@ -294,9 +294,9 @@ export default function FavoritesPage() {
             onClick={(e) => e.stopPropagation()}
             style={{ touchAction: 'pan-y' }}
           >
-            {/* Purple transparent rectangles */}
+            {/* Gold transparent rectangles */}
             <motion.div 
-              className="absolute -inset-4 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-lg -z-10"
+              className="absolute -inset-4 bg-gradient-to-r from-gold-500/20 to-gold-400/20 rounded-lg -z-10"
               animate={{
                 rotate: [0, 2, 0, -2, 0],
               }}
@@ -307,7 +307,7 @@ export default function FavoritesPage() {
               }}
             />
             <motion.div 
-              className="absolute -inset-2 bg-gradient-to-r from-purple-300/30 to-pink-300/30 rounded-lg -z-10"
+              className="absolute -inset-2 bg-gradient-to-r from-gold-400/30 to-gold-300/30 rounded-lg -z-10"
               animate={{
                 rotate: [0, -1, 0, 1, 0],
               }}
@@ -407,8 +407,8 @@ export default function FavoritesPage() {
                     <MessageCircle className="h-5 w-5 mr-3 text-green-500" />
                     <div>
                       {t("customSizeAssistance")}
-                      <a href="https://wa.me/971502996885" target="_blank" rel="noopener noreferrer" className="font-medium text-green-600 hover:underline ml-1">
-                        +971 50 299 6885
+                      <a href="https://wa.me/201028126522" target="_blank" rel="noopener noreferrer" className="font-medium text-green-600 hover:underline ml-1">
+                        +20 10 2812 6522
                       </a>
                     </div>
                   </div>
@@ -532,7 +532,7 @@ export default function FavoritesPage() {
                     {selectedProduct?.isOutOfStock ? t("outOfStock") : t("buyNow")}
                   </span>
                   <motion.span 
-                    className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100"
+                    className="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-400 opacity-0 group-hover:opacity-100"
                     initial={{ x: "-100%" }}
                     whileHover={{ x: 0 }}
                     transition={{ duration: 0.4 }}
@@ -604,7 +604,7 @@ export default function FavoritesPage() {
                   initial={{ width: 0 }}
                   animate={{ width: "100px" }}
                   transition={{ duration: 0.8, delay: 0.3 }}
-                  className="h-1 bg-gradient-to-r from-purple-400 to-pink-400 mb-4 rounded-full"
+                  className="h-1 bg-gradient-to-r from-gold-500 to-gold-400 mb-4 rounded-full"
                 />
                 <p className="text-gray-400">
                   {favoritesState.count === 0
@@ -654,16 +654,16 @@ export default function FavoritesPage() {
                 className="mb-8"
               >
                 <div className="relative mx-auto mb-6 flex justify-center">
-                  <div className="w-28 h-28 bg-gradient-to-r from-pink-50 to-purple-50 rounded-full flex items-center justify-center">
-                    <Heart className="h-14 w-14 text-purple-400" />
+                  <div className="w-28 h-28 bg-gradient-to-r from-gold-500/20 to-gold-400/10 rounded-full flex items-center justify-center">
+                    <Heart className="h-14 w-14 text-gold-500" />
                   </div>
                 </div>
-                <h2 className="text-2xl font-light tracking-wider mb-4 text-purple-700">{t("noFavoritesYet")}</h2>
+                <h2 className="text-2xl font-light tracking-wider mb-4 text-gold-500">{t("noFavoritesYet")}</h2>
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: "100px" }}
                   transition={{ duration: 0.8, delay: 0.5 }}
-                  className="h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto my-6 rounded-full"
+                  className="h-1 bg-gradient-to-r from-gold-500 to-gold-400 mx-auto my-6 rounded-full"
                 />
                 <p className="text-gray-400 mb-8 max-w-md mx-auto">
                   {t("noFavoritesDesc")}
@@ -678,7 +678,7 @@ export default function FavoritesPage() {
                   <Button className="bg-black text-white hover:bg-dark-700 rounded-full px-8 py-6 relative overflow-hidden group">
                     <span className="relative z-10">{t("exploreCollections")}</span>
                     <motion.span 
-                      className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100"
+                      className="absolute inset-0 bg-gradient-to-r from-gold-600 to-gold-400 opacity-0 group-hover:opacity-100"
                       initial={{ x: "-100%" }}
                       whileHover={{ x: 0 }}
                       transition={{ duration: 0.4 }}
@@ -712,9 +712,9 @@ export default function FavoritesPage() {
                     
                     {/* Product Card */}
                     <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 h-full relative overflow-hidden">
-                      {/* Purple transparent rectangles */}
+                      {/* Gold transparent rectangles */}
                       <motion.div 
-                        className="absolute -inset-4 bg-gradient-to-r from-purple-400/10 to-pink-400/10 rounded-lg -z-10"
+                        className="absolute -inset-4 bg-gradient-to-r from-gold-500/10 to-gold-400/10 rounded-lg -z-10"
                         animate={{
                           rotate: [0, 0.5, 0, -0.5, 0],
                         }}
@@ -725,7 +725,7 @@ export default function FavoritesPage() {
                         }}
                       />
                       <motion.div 
-                        className="absolute -inset-2 bg-gradient-to-r from-purple-300/15 to-pink-300/15 rounded-lg -z-10"
+                        className="absolute -inset-2 bg-gradient-to-r from-gold-400/15 to-gold-300/15 rounded-lg -z-10"
                         animate={{
                           rotate: [0, -0.3, 0, 0.3, 0],
                         }}
@@ -930,7 +930,7 @@ export default function FavoritesPage() {
         transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
         className="fixed bottom-8 left-8 z-10"
       >
-        <Sparkles className="h-6 w-6 text-purple-400" />
+        <Sparkles className="h-6 w-6 text-gold-500" />
       </motion.div>
       
       <motion.div
@@ -938,7 +938,7 @@ export default function FavoritesPage() {
         transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
         className="fixed top-1/4 right-8 z-10"
       >
-        <Sparkles className="h-4 w-4 text-pink-400" />
+        <Sparkles className="h-4 w-4 text-gold-400" />
       </motion.div>
     </div>
   )

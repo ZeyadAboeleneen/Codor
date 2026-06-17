@@ -66,7 +66,7 @@ export default function UserDashboard() {
         <section className="pt-28 md:pt-24 pb-16">
           <div className="container mx-auto px-6">
             <div className="text-center py-16">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gold-500 mx-auto mb-4"></div>
               <p className="text-gray-400">Loading dashboard...</p>
             </div>
           </div>
@@ -104,7 +104,7 @@ export default function UserDashboard() {
                 <p className="text-gray-400">Welcome back, {authState.user?.name}</p>
               </div>
               <Link href="/products">
-                <Button className="bg-black text-white hover:bg-dark-700">
+                <Button className="bg-gold-500 text-dark-900 hover:bg-gold-400 font-semibold">
                   <ShoppingCart className="mr-2 h-4 w-4" />
                   Continue Shopping
                 </Button>
@@ -119,14 +119,14 @@ export default function UserDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
             >
-              <Card>
+              <Card className="bg-dark-400 border border-white/10">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-400">Total Orders</p>
                       <p className="text-2xl font-light">{totalOrders}</p>
                     </div>
-                    <Package className="h-8 w-8 text-blue-600" />
+                    <Package className="h-8 w-8 text-gold-500" />
                   </div>
                 </CardContent>
               </Card>
@@ -137,14 +137,14 @@ export default function UserDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <Card>
+              <Card className="bg-dark-400 border border-white/10">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-400">Total Spent</p>
                       <p className="text-2xl font-light">${totalSpent.toFixed(2)}</p>
                     </div>
-                    <ShoppingCart className="h-8 w-8 text-green-600" />
+                    <ShoppingCart className="h-8 w-8 text-gold-400" />
                   </div>
                 </CardContent>
               </Card>
@@ -155,14 +155,14 @@ export default function UserDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <Card>
+              <Card className="bg-dark-400 border border-white/10">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-gray-400">Account Status</p>
                       <p className="text-2xl font-light">Active</p>
                     </div>
-                    <User className="h-8 w-8 text-purple-600" />
+                    <User className="h-8 w-8 text-gold-300" />
                   </div>
                 </CardContent>
               </Card>
@@ -176,7 +176,7 @@ export default function UserDashboard() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <Card>
+              <Card className="bg-dark-400 border border-white/10">
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <User className="mr-2 h-5 w-5" />
@@ -197,7 +197,7 @@ export default function UserDashboard() {
                     <Badge variant="secondary">{authState.user?.role}</Badge>
                   </div>
                   <Separator />
-                  <Button variant="outline" className="w-full bg-transparent">
+                  <Button variant="outline" className="w-full bg-transparent border-white/10 text-white hover:bg-dark-500 hover:border-gold-500/30">
                     Edit Profile
                   </Button>
                 </CardContent>
@@ -211,7 +211,7 @@ export default function UserDashboard() {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="lg:col-span-2"
             >
-              <Card>
+              <Card className="bg-dark-400 border border-white/10">
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <Package className="mr-2 h-5 w-5" />
@@ -229,13 +229,13 @@ export default function UserDashboard() {
                       <Package className="h-12 w-12 mx-auto text-gray-300 mb-4" />
                       <p className="text-gray-400 mb-4">No orders yet</p>
                       <Link href="/products">
-                        <Button className="bg-black text-white hover:bg-dark-700">Start Shopping</Button>
+                        <Button className="bg-gold-500 text-dark-900 hover:bg-gold-400 font-semibold">Start Shopping</Button>
                       </Link>
                     </div>
                   ) : (
                     <div className="space-y-4">
                       {userOrders.map((order) => (
-                        <div key={order.id} className="border rounded-lg p-4">
+                        <div key={order.id} className="border border-white/10 rounded-lg p-4">
                           <div className="flex items-center justify-between mb-4">
                             <div>
                               <p className="font-medium">Order #{order.id}</p>

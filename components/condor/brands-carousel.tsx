@@ -5,10 +5,11 @@ import Image from "next/image"
 import { Link } from "@/i18n/routing"
 import { ArrowLeft, ChevronRight, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 
 export function BrandsCarousel() {
   const t = useTranslations()
+  const locale = useLocale()
   const [brands, setBrands] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -35,6 +36,8 @@ export function BrandsCarousel() {
       const scrollAmount = 300
       const currentScroll = scrollContainerRef.current.scrollLeft
       
+      // For RTL layout, standard scroll left/right can behave differently.
+      // Next.js routing and direction sets standard dir attributes.
       scrollContainerRef.current.scrollTo({
         left: direction === 'left' ? currentScroll - scrollAmount : currentScroll + scrollAmount,
         behavior: 'smooth'
@@ -46,19 +49,21 @@ export function BrandsCarousel() {
     return null
   }
 
+  const isRTL = locale === "ar"
+
   return (
     <section className="py-16 bg-dark-500 border-y border-white/5 relative overflow-hidden">
       {/* Decorative background blur */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-gold-500/5 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-6" dir="rtl">
+        <div className={`flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-6`} dir={isRTL ? "rtl" : "ltr"}>
           <div>
             <h2 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
               <span className="w-8 h-1 bg-gold-500 rounded-full inline-block" />
               {t("ourBrands")}
             </h2>
-            <p className="text-gray-400 text-base pr-11 max-w-xl">
+            <p className={`text-gray-400 text-base max-w-xl ${isRTL ? "pr-11" : "pl-11"}`}>
               {t("brandsCarouselDesc")}
             </p>
           </div>
@@ -68,7 +73,7 @@ export function BrandsCarousel() {
               <Button 
                 variant="outline" 
                 size="icon" 
-                onClick={() => scroll('right')} 
+                onClick={() => scroll(isRTL ? 'right' : 'left')} 
                 className="rounded-full bg-dark-400 border-white/10 text-white hover:bg-gold-500/20 hover:text-gold-400 hover:border-gold-500/30"
               >
                 <ChevronRight className="h-5 w-5" />
@@ -76,7 +81,7 @@ export function BrandsCarousel() {
               <Button 
                 variant="outline" 
                 size="icon" 
-                onClick={() => scroll('left')} 
+                onClick={() => scroll(isRTL ? 'left' : 'right')} 
                 className="rounded-full bg-dark-400 border-white/10 text-white hover:bg-gold-500/20 hover:text-gold-400 hover:border-gold-500/30"
               >
                 <ChevronLeft className="h-5 w-5" />
@@ -85,7 +90,7 @@ export function BrandsCarousel() {
             
             <Link href="/products" className="group flex items-center gap-2 text-sm text-gold-400 hover:text-gold-300 font-medium transition-colors bg-gold-500/10 px-4 py-2 rounded-full border border-gold-500/20 hover:bg-gold-500/20">
               {t("allProducts")}
-              <ArrowLeft className="h-4 w-4 transform group-hover:-translate-x-1 transition-transform" />
+              <ArrowLeft className={`h-4 w-4 transform transition-transform ${isRTL ? "group-hover:-translate-x-1" : "rotate-180 group-hover:translate-x-1"}`} />
             </Link>
           </div>
         </div>
@@ -94,7 +99,7 @@ export function BrandsCarousel() {
         <div 
           ref={scrollContainerRef}
           className="flex overflow-x-auto gap-4 pb-8 pt-4 -mx-4 px-4 sm:mx-0 sm:px-0 hide-scrollbar snap-x snap-mandatory"
-          dir="rtl"
+          dir={isRTL ? "rtl" : "ltr"}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {brands.map((brand) => (

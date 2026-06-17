@@ -217,7 +217,7 @@ export function OffersBanner() {
       >
         {/* Black background */}
         <div className="absolute inset-0 bg-gradient-to-r from-black via-neutral-950 to-black border-b border-gold-500/70" />
-        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-purple-400/40 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-gold-500/40 to-transparent" />
 
         <div className="container mx-auto px-4 h-full relative z-20">
           <div className="flex items-center justify-center relative h-full">
@@ -233,7 +233,7 @@ export function OffersBanner() {
                       prevOffer()
                     }
                   }}
-                  className="absolute left-0 p-1 text-purple-300/80 hover:text-white transition-all duration-200 h-full flex items-center"
+                  className="absolute left-0 p-1 text-gold-400/80 hover:text-white transition-all duration-200 h-full flex items-center"
                   aria-label="Previous offer"
                 >
                   <ChevronLeft className="h-3 w-3" strokeWidth={2.5} />
@@ -248,7 +248,7 @@ export function OffersBanner() {
                       nextOffer()
                     }
                   }}
-                  className="absolute right-0 p-1 text-purple-300/80 hover:text-white transition-all duration-200 h-full flex items-center"
+                  className="absolute right-0 p-1 text-gold-400/80 hover:text-white transition-all duration-200 h-full flex items-center"
                   aria-label="Next offer"
                 >
                   <ChevronRight className="h-3 w-3" strokeWidth={2.5} />
@@ -275,7 +275,7 @@ export function OffersBanner() {
                   >
                     <div className="flex flex-col justify-center min-w-0 flex-1">
                       {currentOffer.title && (
-                        <span className="font-medium text-[10px] md:text-[11px] uppercase tracking-[0.22em] text-purple-100/90 leading-tight truncate">
+                        <span className="font-medium text-[10px] md:text-[11px] uppercase tracking-[0.22em] text-gold-200/90 leading-tight truncate">
                           {currentOffer.title}
                         </span>
                       )}
@@ -301,15 +301,15 @@ export function OffersBanner() {
                             copyCode()
                           }
                         }}
-                        className="group relative px-3 py-1 rounded-full border border-purple-300/60 bg-zinc-900/80 text-purple-100 font-medium tracking-[0.2em] uppercase cursor-pointer transition-all duration-200 flex items-center gap-2 shadow-sm hover:bg-zinc-900 hover:shadow-md"
+                        className="group relative px-3 py-1 rounded-full border border-gold-400/60 bg-zinc-900/80 text-gold-200 font-medium tracking-[0.2em] uppercase cursor-pointer transition-all duration-200 flex items-center gap-2 shadow-sm hover:bg-zinc-900 hover:shadow-md"
                       >
                         <span className="font-mono text-[10px] md:text-[11px] tracking-[0.25em] uppercase">
                           {currentOffer.discountCode}
                         </span>
                         {copied ? (
-                          <Check className="h-3 w-3 text-purple-300" />
+                          <Check className="h-3 w-3 text-gold-400" />
                         ) : (
-                          <Copy className="h-3 w-3 text-purple-200/80 group-hover:text-purple-100 transition-colors" />
+                          <Copy className="h-3 w-3 text-gold-300/80 group-hover:text-gold-200 transition-colors" />
                         )}
                       </motion.div>
                       {copied && (
@@ -317,7 +317,7 @@ export function OffersBanner() {
                           initial={{ opacity: 0, y: 5 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 5 }}
-                          className="text-[9px] md:text-[10px] text-purple-200/80 tracking-[0.22em] uppercase font-medium"
+                          className="text-[9px] md:text-[10px] text-gold-300/80 tracking-[0.22em] uppercase font-medium"
                         >
                           Copied!
                         </motion.span>
@@ -338,7 +338,7 @@ export function OffersBanner() {
                   handleClose()
                 }
               }}
-              className="absolute right-0 p-1 text-purple-300/80 hover:text-white transition-all duration-200 h-full flex items-center"
+              className="absolute right-0 p-1 text-gold-400/80 hover:text-white transition-all duration-200 h-full flex items-center"
               aria-label="Close banner"
             >
               <X className="h-3 w-3" strokeWidth={2.5} />
@@ -349,7 +349,7 @@ export function OffersBanner() {
         {offers.length > 1 && (
           <div className="absolute bottom-0 left-0 right-0 h-px bg-zinc-900/80">
             <motion.div
-              className="h-full bg-gradient-to-r from-purple-400 to-pink-400"
+              className="h-full bg-gradient-to-r from-gold-500 to-gold-400"
               initial={{ width: "0%" }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.1 }}

@@ -8,19 +8,19 @@ import { useTranslations } from "next-intl"
 
 const SOCIAL_LINKS = [
   {
-    href: "https://www.facebook.com/condoregypt",
+    href: "https://www.facebook.com/share/1BFNEcNQXS/?mibextid=wwXIfr",
     icon: Facebook,
     label: "Facebook",
     color: "hover:bg-blue-600/20 hover:text-blue-400",
   },
   {
-    href: "https://www.instagram.com/condoregypt",
+    href: "https://www.instagram.com/condor.egy?igsh=MTc2cHcydWc3OTB0&utm_source=qr",
     icon: Instagram,
     label: "Instagram",
     color: "hover:bg-pink-600/20 hover:text-pink-400",
   },
   {
-    href: "https://wa.me/201234567890",
+    href: "https://wa.me/201028126522",
     icon: MessageCircle,
     label: "WhatsApp",
     color: "hover:bg-green-600/20 hover:text-green-400",
@@ -149,27 +149,27 @@ export function CondorFooter() {
               </li>
               <li>
                 <a
-                  href="tel:+201234567890"
+                  href="tel:+201028126522"
                   className="flex items-start gap-3 group"
                 >
                   <div className="w-8 h-8 rounded-lg bg-gold-500/10 flex items-center justify-center flex-shrink-0">
                     <Phone className="h-4 w-4 text-gold-400" />
                   </div>
                   <span className="text-gray-400 text-sm group-hover:text-gold-400 transition-colors" dir="ltr">
-                    +20 123 456 7890
+                    +20 10 2812 6522
                   </span>
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:info@condoregypt.com"
+                  href="mailto:condor.egyy@gmail.com"
                   className="flex items-start gap-3 group"
                 >
                   <div className="w-8 h-8 rounded-lg bg-gold-500/10 flex items-center justify-center flex-shrink-0">
                     <Mail className="h-4 w-4 text-gold-400" />
                   </div>
                   <span className="text-gray-400 text-sm group-hover:text-gold-400 transition-colors">
-                    info@condoregypt.com
+                    condor.egyy@gmail.com
                   </span>
                 </a>
               </li>
@@ -202,7 +202,7 @@ export function CondorFooter() {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/201234567890"
+        href="https://wa.me/201028126522"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-20 md:bottom-6 left-4 md:left-6 z-50 w-12 h-12 md:w-14 md:h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 hover:bg-green-400 transition-all duration-300 hover:scale-110 animate-pulse-gold"

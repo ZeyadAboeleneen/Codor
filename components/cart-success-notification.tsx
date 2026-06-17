@@ -24,9 +24,9 @@ export function CartSuccessNotification() {
           className="fixed top-20 right-4 z-50 w-96"
         >
           <Card className="shadow-xl border-0 bg-dark-600 relative overflow-hidden">
-            {/* Purple transparent rectangles */}
+            {/* Gold transparent rectangles */}
             <motion.div 
-              className="absolute -inset-4 bg-gradient-to-r from-purple-400/15 to-pink-400/15 rounded-lg -z-10"
+              className="absolute -inset-4 bg-gradient-to-r from-gold-500/10 to-gold-600/10 rounded-lg -z-10"
               animate={{
                 rotate: [0, 0.3, 0, -0.3, 0],
               }}
@@ -37,7 +37,7 @@ export function CartSuccessNotification() {
               }}
             />
             <motion.div 
-              className="absolute -inset-2 bg-gradient-to-r from-purple-300/20 to-pink-300/20 rounded-lg -z-10"
+              className="absolute -inset-2 bg-gradient-to-r from-gold-500/15 to-gold-600/15 rounded-lg -z-10"
               animate={{
                 rotate: [0, -0.2, 0, 0.2, 0],
               }}
@@ -50,15 +50,15 @@ export function CartSuccessNotification() {
             <CardContent className="p-4">
               <div className="flex items-start space-x-3">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full flex items-center justify-center">
-                    <Check className="w-5 h-5 text-purple-600" />
+                  <div className="w-10 h-10 bg-gold-500/10 border border-gold-500/20 rounded-full flex items-center justify-center">
+                    <Check className="w-5 h-5 text-gold-500" />
                   </div>
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-purple-900 mb-1">Added to cart!</p>
+                      <p className="text-sm font-semibold text-gold-500 mb-1">Added to cart!</p>
                       <div className="flex items-center space-x-3">
                         <Image
                           src={state.lastAddedItem.image || "/placeholder.svg"}
@@ -86,7 +86,7 @@ export function CartSuccessNotification() {
 
                   <div className="flex items-center space-x-2 mt-3">
                     <Link href="/cart" onClick={hideNotification}>
-                      <Button size="sm" className="bg-black text-white hover:bg-dark-700 text-xs px-3 py-1 rounded-full">
+                      <Button size="sm" className="bg-gold-500 text-dark-900 hover:bg-gold-400 font-semibold text-xs px-3 py-1 rounded-full">
                         <ShoppingCart className="w-3 h-3 mr-1" />
                         View Cart ({state.count})
                       </Button>
@@ -95,7 +95,7 @@ export function CartSuccessNotification() {
                       size="sm"
                       variant="outline"
                       onClick={hideNotification}
-                      className="text-xs px-4 py-2 border-purple-300 bg-transparent text-purple-700 hover:bg-purple-50 hover:border-purple-500 rounded-full"
+                      className="text-xs px-4 py-2 border-white/10 bg-transparent text-gray-300 hover:text-gold-400 hover:border-gold-500/30 hover:bg-gold-500/10 rounded-full"
                     >
                       Continue Shopping
                     </Button>

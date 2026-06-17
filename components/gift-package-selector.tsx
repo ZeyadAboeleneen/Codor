@@ -103,7 +103,7 @@ export function GiftPackageSelector({
       .filter((item): item is NonNullable<typeof item> => item !== null) || []
 
     openWhatsAppOrder({
-      phoneNumber: "+971502996885",
+      phoneNumber: "+201028126522",
       product: {
         id: product.id,
         name: product.name,
